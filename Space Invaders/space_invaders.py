@@ -38,6 +38,7 @@ def run_game():
     ship = Ship(ai_settings, screen, sprite_sheet)
     bullets = Group()
     aliens = Group()
+    alien_bullets = Group()
     explosions = []
 
     
@@ -57,7 +58,7 @@ def run_game():
                 bullets, sprite_sheet)
 
         gf.update_screen(ai_settings, screen, stats, sb, ship, aliens,
-            bullets, play_button, explosions)
+            bullets, play_button, explosions, sprite_sheet, alien_bullets)
 
         clock.tick(Settings.fps)
 

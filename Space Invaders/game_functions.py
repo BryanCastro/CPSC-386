@@ -6,6 +6,7 @@ import pygame
 from bullet import Bullet
 from alien import Alien
 from explosion import Explosion
+import random
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet):
     """Respond to keypresses."""
@@ -76,8 +77,32 @@ def fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet):
         new_bullet = Bullet(ai_settings, screen, ship, sprite_sheet)
         bullets.add(new_bullet)
 
+def alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets):
+
+    shoot_rand = random.randint(1, 10000)
+
+    if shoot_rand <= 1:
+        new_bullet = Bullet(ai_settings, screen, alien, sprite_sheet)
+        alien_bullets.add(new_bullet)
+
+
+def alien_bullet_update(alien_bullets, ai_settings, ship):
+
+    for bullet in alien_bullets.copy():
+        bullet.y += bullet.speed_factor
+        bullet.rect.y = bullet.y
+        bullet.draw_bullet()
+
+        if bullet.rect.bottom >= ai_settings.screen_height:
+                alien_bullets.remove(bullet)
+        elif bullet.rect.y >= ship.rect.y and bullet.rect.x <= ship.rect.right and bullet.rect.x >=ship.rect.left:
+            alien_bullets.remove(bullet)
+            del ship
+            sys.exit()
+
+
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
-        play_button, explosions):
+        play_button, explosions, sprite_sheet, alien_bullets):
     """Update images on the screen, and flip to the new screen."""
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
@@ -89,7 +114,9 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     #aliens.draw(screen)
     for alien in aliens.sprites():
         alien.blitme()
-        alien.alien_shoot()
+        alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets)
+
+    alien_bullet_update(alien_bullets, ai_settings, ship)
 
     #Draw Explosions
     for exp in explosions:
@@ -226,8 +253,8 @@ def get_number_aliens_x(ai_settings, alien_width):
 def get_number_rows(ai_settings, ship_height, alien_height):
     """Determine the number of rows of aliens that fit on the screen."""
     available_space_y = (ai_settings.screen_height -
-                            (3 * alien_height) - ship_height)
-    number_rows = int(available_space_y / (2 * alien_height))
+                            (4 * alien_height) - ship_height)
+    number_rows = int(available_space_y / (4 * alien_height))
     return number_rows
     
 def create_alien(ai_settings, screen, aliens, alien_number, row_number, sprite_sheet):
@@ -236,7 +263,7 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number, sprite_s
     alien_width = alien.rect.width
     alien.x = alien_width + 2 * alien_width * alien_number
     alien.rect.x = alien.x
-    alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+    alien.rect.y = alien.rect.height * 4 + 2 * alien.rect.height * row_number
     aliens.add(alien)
 
 def create_fleet(ai_settings, screen, ship, aliens, sprite_sheet):

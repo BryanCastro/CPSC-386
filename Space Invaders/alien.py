@@ -66,11 +66,4 @@ class Alien(Sprite):
         self.screen.blit(self.sprite_sheet.sheet, self.rect,
                          self.sprite_sheet.cell_list[self.Ship_Sprite_Index[self.frame_counti]])
 
-    def alien_shoot(self):
 
-        if self.bullet_count_tracker < self.ai_settings.alien_bullets_allowed:
-            shoot_rand = random.randint(1, 60)
-
-            if shoot_rand <= 5:
-                self.bullet_count_tracker += 1
-                print("Shoot!")
