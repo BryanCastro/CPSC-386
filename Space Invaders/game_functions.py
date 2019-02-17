@@ -5,15 +5,16 @@ import pygame
 
 from bullet import Bullet
 from alien import Alien
+from explosion import Explosion
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet):
     """Respond to keypresses."""
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        fire_bullet(ai_settings, screen, ship, bullets)
+        fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet)
     elif event.key == pygame.K_q:
         sys.exit()
         
@@ -31,7 +32,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens,
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -68,15 +69,15 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship,
         create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
         ship.center_ship()
 
-def fire_bullet(ai_settings, screen, ship, bullets):
+def fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet):
     """Fire a bullet, if limit not reached yet."""
     # Create a new bullet, add to bullets group.
     if len(bullets) < ai_settings.bullets_allowed:
-        new_bullet = Bullet(ai_settings, screen, ship)
+        new_bullet = Bullet(ai_settings, screen, ship, sprite_sheet)
         bullets.add(new_bullet)
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
-        play_button):
+        play_button, explosions):
     """Update images on the screen, and flip to the new screen."""
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
@@ -88,7 +89,14 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     #aliens.draw(screen)
     for alien in aliens.sprites():
         alien.blitme()
-    
+        alien.alien_shoot()
+
+    #Draw Explosions
+    for exp in explosions:
+        exp.draw_explosion()
+        if exp.explosion_done == True:
+            explosions.remove(exp)
+
     # Draw the score information.
     sb.show_score()
     
@@ -99,7 +107,7 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     # Make the most recently drawn screen visible.
     pygame.display.flip()
     
-def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explosion, sprite_sheet):
     """Update position of bullets, and get rid of old bullets."""
     # Update bullet positions.
     bullets.update()
@@ -110,7 +118,7 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
             bullets.remove(bullet)
             
     check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
-        aliens, bullets)
+        aliens, bullets, explosion, sprite_sheet)
         
 def check_high_score(stats, sb):
     """Check to see if there's a new high score."""
@@ -119,11 +127,17 @@ def check_high_score(stats, sb):
         sb.prep_high_score()
             
 def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
-        aliens, bullets):
+        aliens, bullets, explosions, sprite_sheet):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
-    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
-    
+    collisions = pygame.sprite.groupcollide(aliens, bullets, True, True)
+    for hit in collisions:
+        new_explosion = Explosion(sprite_sheet, screen)
+        new_explosion.rect = pygame.Rect(hit.rect)
+        new_explosion.rect.centerx = hit.rect.centerx
+        explosions.append(new_explosion)
+        #print(new_explosion.rect)
+
     if collisions:
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
@@ -139,7 +153,7 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
         stats.level += 1
         sb.prep_level()
         
-        create_fleet(ai_settings, screen, ship, aliens)
+        create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
     
 def check_fleet_edges(ai_settings, aliens):
     """Respond appropriately if any aliens have reached an edge."""

@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 from settings import Settings
+import random
 
 class Alien(Sprite):
     """A class to represent a single alien in the fleet."""
@@ -31,7 +32,11 @@ class Alien(Sprite):
         self.total_num_of_alien_Sprites = 3
         self.num_of_base_frames = len(self.Ship_Sprite_Index) / self.total_num_of_alien_Sprites
         self.frame_counter = 0
-        self.frame_counti = 0
+        self.frame_start = random.randint(0, 2) * 2
+        self.frame_counti = self.frame_start
+
+        #bullet count tracker
+        self.bullet_count_tracker = 0
 
         
     def check_edges(self):
@@ -54,10 +59,18 @@ class Alien(Sprite):
         if self.frame_counter % Settings.fps / 2 == 0:
             self.frame_counti += 1
 
-            if self.frame_counti >= self.num_of_base_frames:
-                self.frame_counti = 0
+            if self.frame_counti >= self.frame_start + 2:
+                self.frame_counti = self.frame_start
 
             """Draw the alien at its current location."""
         self.screen.blit(self.sprite_sheet.sheet, self.rect,
                          self.sprite_sheet.cell_list[self.Ship_Sprite_Index[self.frame_counti]])
 
+    def alien_shoot(self):
+
+        if self.bullet_count_tracker < self.ai_settings.alien_bullets_allowed:
+            shoot_rand = random.randint(1, 60)
+
+            if shoot_rand <= 5:
+                self.bullet_count_tracker += 1
+                print("Shoot!")

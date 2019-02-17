@@ -8,6 +8,7 @@ from button import Button
 from ship import Ship
 from sprite_sheet import SpriteSheet
 import game_functions as gf
+from explosion import Explosion
 
 def run_game():
     # Initialize pygame, settings, and screen object.
@@ -37,6 +38,8 @@ def run_game():
     ship = Ship(ai_settings, screen, sprite_sheet)
     bullets = Group()
     aliens = Group()
+    explosions = []
+
     
     # Create the fleet of aliens.
     gf.create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
@@ -49,13 +52,16 @@ def run_game():
         if stats.game_active:
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens,
-                bullets)
+                bullets, explosions, sprite_sheet)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens,
                 bullets, sprite_sheet)
-        
+
         gf.update_screen(ai_settings, screen, stats, sb, ship, aliens,
-            bullets, play_button)
+            bullets, play_button, explosions)
 
         clock.tick(Settings.fps)
 
 run_game()
+
+
+###Left off alien class, shoot_function

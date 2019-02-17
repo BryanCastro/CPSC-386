@@ -17,7 +17,7 @@ class Scoreboard():
         self.sprite_sheet = sprite_sheet
         
         # Font settings for scoring information.
-        self.text_color = (30, 30, 30)
+        self.text_color = (255, 255, 255)
         self.font = pygame.font.SysFont(None, 48)
 
         # Prepare the initial score images.
@@ -75,4 +75,6 @@ class Scoreboard():
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
         # Draw ships.
-        self.ships.draw(self.screen)
+        #self.ships.draw(self.screen)
+        for ship in self.ships.sprites():
+            ship.blitme()
