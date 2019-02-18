@@ -9,6 +9,8 @@ from ship import Ship
 from sprite_sheet import SpriteSheet
 import game_functions as gf
 from explosion import Explosion
+from main_screen import Main_Screen
+
 
 def run_game():
     # Initialize pygame, settings, and screen object.
@@ -61,6 +63,7 @@ def run_game():
             bullets, play_button, explosions, sprite_sheet, alien_bullets)
 
         clock.tick(Settings.fps)
+
 
 run_game()
 

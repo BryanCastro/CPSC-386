@@ -86,7 +86,7 @@ def alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets):
         alien_bullets.add(new_bullet)
 
 
-def alien_bullet_update(alien_bullets, ai_settings, ship):
+def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb):
 
     for bullet in alien_bullets.copy():
         bullet.y += bullet.speed_factor
@@ -97,8 +97,14 @@ def alien_bullet_update(alien_bullets, ai_settings, ship):
                 alien_bullets.remove(bullet)
         elif bullet.rect.y >= ship.rect.y and bullet.rect.x <= ship.rect.right and bullet.rect.x >=ship.rect.left:
             alien_bullets.remove(bullet)
-            del ship
-            sys.exit()
+            new_explosion = Explosion(sprite_sheet, screen)
+            new_explosion.rect = pygame.Rect(ship.rect)
+            new_explosion.rect.centerx = ship.rect.centerx
+            explosions.append(new_explosion)
+            ship.ship_destroyed = True
+            stats.ships_left -= 1
+            sb.prep_ships()
+            #sys.exit()
 
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
@@ -116,7 +122,7 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
         alien.blitme()
         alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets)
 
-    alien_bullet_update(alien_bullets, ai_settings, ship)
+    alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb)
 
     #Draw Explosions
     for exp in explosions:

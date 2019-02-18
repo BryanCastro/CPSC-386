@@ -78,3 +78,4 @@ class Scoreboard():
         #self.ships.draw(self.screen)
         for ship in self.ships.sprites():
             ship.blitme()
+

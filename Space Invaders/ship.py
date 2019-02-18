@@ -29,6 +29,9 @@ class Ship(Sprite):
         self.sprite_sheet = sprite_sheet
         self.Ship_Sprite_Index = 1
         self.Explosion_Index = [4, 5, 7, 8]
+
+        #testing
+        self.ship_destroyed = False
         
     def center_ship(self):
         """Center the ship on the screen."""
@@ -43,7 +46,13 @@ class Ship(Sprite):
             self.center -= self.ai_settings.ship_speed_factor
             
         # Update rect object from self.center.
-        self.rect.centerx = self.center
+        if not self.ship_destroyed:
+            self.rect.centerx = self.center
+        else:
+            self.rect.centerx = self.screen_rect.centerx
+            self.rect.bottom = self.screen_rect.bottom
+            self.center = float(self.rect.centerx)
+            self.ship_destroyed = False
 
     def blitme(self):
         """Draw the ship at its current location."""
