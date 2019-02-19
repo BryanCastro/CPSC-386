@@ -33,6 +33,15 @@ class Alien(Sprite):
         self.num_of_base_frames = len(self.Ship_Sprite_Index) / self.total_num_of_alien_Sprites
         self.frame_counter = 0
         self.frame_start = random.randint(0, 2) * 2
+
+        #points given depending on alien
+        if self.frame_start == 0:
+            self.points = 10
+        elif self.frame_start == 2:
+            self.points = 20
+        elif self.frame_start == 4:
+            self.points = 30
+
         self.frame_counti = self.frame_start
 
         #bullet count tracker

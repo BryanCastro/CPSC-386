@@ -6,7 +6,7 @@ class Settings():
 
     def __init__(self):
         """Initialize the game's static settings."""
-        # Screen settings.
+        # Screen settings. #Default Resolution 1200x800
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (0, 0, 0)
@@ -34,6 +34,9 @@ class Settings():
         #FPS LIMIT
         Settings.fps = 60
 
+        #special ship spawn rate
+        self.special_ship_spawn_rate = 5
+
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
         self.ship_speed_factor = 1.5
@@ -42,6 +45,7 @@ class Settings():
         
         # Scoring.
         self.alien_points = 50
+        self.special_alien_points = 1000
     
         # fleet_direction of 1 represents right, -1 represents left.
         self.fleet_direction = 1

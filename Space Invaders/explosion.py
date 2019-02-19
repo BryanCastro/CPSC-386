@@ -3,7 +3,7 @@ from settings import Settings
 
 class Explosion():
 
-    def __init__(self, sprite_sheet, screen):
+    def __init__(self, sprite_sheet, screen, index_1, index_2, index_3, index_4):
         self.rect = None
         self.screen = screen
         self.fps = Settings.fps
@@ -11,7 +11,8 @@ class Explosion():
         # Explosion Sprite Info
         self.explosion_done = False
         self.sprite_sheet = sprite_sheet
-        self.explosion_index = [15, 16, 18, 19]
+        #15, 16, 18, 19 White; 3, 4, 6, 7 Green; 9, 10, 12, 13 Red
+        self.explosion_index = [index_1, index_2, index_3, index_4]
         self.explosion_start_index = 0
         self.frame_count = len(self.explosion_index)
         self.frame_counter = 0

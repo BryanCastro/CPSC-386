@@ -7,6 +7,7 @@ from bullet import Bullet
 from alien import Alien
 from explosion import Explosion
 import random
+from special_ship import Special_Ship
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet, stats):
@@ -103,7 +104,7 @@ def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_she
                 alien_bullets.remove(bullet)
         elif bullet.rect.y >= ship.rect.y and bullet.rect.x <= ship.rect.right and bullet.rect.x >=ship.rect.left:
             alien_bullets.remove(bullet)
-            new_explosion = Explosion(sprite_sheet, screen)
+            new_explosion = Explosion(sprite_sheet, screen, 3, 4, 6, 7)
             new_explosion.rect = pygame.Rect(ship.rect)
             new_explosion.rect.centerx = ship.rect.centerx
             explosions.append(new_explosion)
@@ -114,7 +115,7 @@ def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_she
 
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
-        play_button, explosions, sprite_sheet, alien_bullets, main_menu):
+        play_button, explosions, sprite_sheet, alien_bullets, main_menu, special_ship):
     """Update images on the screen, and flip to the new screen."""
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
@@ -130,6 +131,13 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
         alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets)
 
     alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb)
+
+    #Draw special alien(screen)
+    for special in special_ship:
+        special.movement()
+        special.blit_special_ship()
+        if special.rect.x > ai_settings.screen_width:
+            special_ship.remove(special)
 
     #Draw Explosions
     for exp in explosions:
@@ -148,7 +156,8 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     pygame.display.flip()
 
 
-def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explosion, sprite_sheet):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explosion, sprite_sheet,
+                   special_ships):
     """Update position of bullets, and get rid of old bullets."""
     # Update bullet positions.
     bullets.update()
@@ -159,7 +168,7 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explos
             bullets.remove(bullet)
             
     check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
-        aliens, bullets, explosion, sprite_sheet)
+        aliens, bullets, explosion, sprite_sheet, special_ships)
 
 
 def check_high_score(stats, sb):
@@ -170,22 +179,38 @@ def check_high_score(stats, sb):
 
 
 def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
-        aliens, bullets, explosions, sprite_sheet):
+        aliens, bullets, explosions, sprite_sheet, special_ships):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     collisions = pygame.sprite.groupcollide(aliens, bullets, True, True)
     for hit in collisions:
-        new_explosion = Explosion(sprite_sheet, screen)
+        new_explosion = Explosion(sprite_sheet, screen, 15, 16, 18, 19)
         new_explosion.rect = pygame.Rect(hit.rect)
         new_explosion.rect.centerx = hit.rect.centerx
         explosions.append(new_explosion)
+        stats.score += hit.points #Increase points
         #print(new_explosion.rect)
 
     if collisions:
         for aliens in collisions.values():
-            stats.score += ai_settings.alien_points * len(aliens)
+            #stats.score += ai_settings.alien_points * len(aliens)
+            #stats.score += aliens.points
             sb.prep_score()
         check_high_score(stats, sb)
+
+    collisions_special = pygame.sprite.groupcollide(special_ships, bullets, True, True)
+    for hit in collisions_special:
+        new_explosion = Explosion(sprite_sheet, screen, 9, 10, 12, 13)
+        new_explosion.rect = pygame.Rect(hit.rect)
+        new_explosion.rect.centerx = hit.rect.centerx
+        explosions.append(new_explosion)
+
+    if collisions_special:
+        for aliens in collisions_special.values():
+            stats.score += ai_settings.special_alien_points
+            sb.prep_score()
+        check_high_score(stats, sb)
+
     
     if len(aliens) == 0:
         # If the entire fleet is destroyed, start a new level.
@@ -248,7 +273,7 @@ def check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens,
             ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_sheet)
             break
             
-def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_sheet):
+def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_sheet, special_ship):
     """
     Check if the fleet is at an edge,
       then update the postions of all aliens in the fleet.
@@ -262,6 +287,15 @@ def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_
 
     # Look for aliens hitting the bottom of the screen.
     check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_sheet)
+
+    #spawn special alien based on rng
+    #here #20000 seems good
+    spawn_rng = random.randint(0, 20000)
+    if spawn_rng <= ai_settings.special_ship_spawn_rate:
+        new_special_ship = Special_Ship(screen, sprite_sheet)
+        special_ship.add(new_special_ship)
+
+
             
 def get_number_aliens_x(ai_settings, alien_width):
     """Determine the number of aliens that fit in a row."""

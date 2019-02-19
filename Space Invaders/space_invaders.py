@@ -43,10 +43,11 @@ def run_game():
     aliens = Group()
     alien_bullets = Group()
     explosions = []
-    special_ship = Special_Ship(screen, sprite_sheet)
+    #special_ship = Special_Ship(screen, sprite_sheet)
+    special_ships = Group()
 
     #make main menu
-    main_menu = Main_Menu(screen)
+    main_menu = Main_Menu(screen, sprite_sheet)
 
     # Create the fleet of aliens.
     gf.create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
@@ -59,16 +60,16 @@ def run_game():
 
         if stats.game_active:
             gf.update_screen(ai_settings, screen, stats, sb, ship, aliens,
-                             bullets, play_button, explosions, sprite_sheet, alien_bullets, main_menu)
+                             bullets, play_button, explosions, sprite_sheet, alien_bullets, main_menu, special_ships)
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens,
-                bullets, explosions, sprite_sheet)
+                bullets, explosions, sprite_sheet, special_ships)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens,
-                bullets, sprite_sheet)
+                bullets, sprite_sheet, special_ships)
         else:
             screen.fill(bg_color)
-            special_ship.movement()
-            special_ship.blit_special_ship()
+            #special_ship.movement()
+            #special_ship.blit_special_ship()
             main_menu.render_menu()
 
         clock.tick(Settings.fps)

@@ -1,8 +1,10 @@
 import pygame
+from pygame.sprite import Sprite
 
-class Special_Ship:
+class Special_Ship(Sprite):
 
     def __init__(self,screen, sprite_sheet):
+        super(Special_Ship, self).__init__()
         self.screen = screen
         self.sprite_sheet = sprite_sheet
         self.sprite_pos_sheet = 0
