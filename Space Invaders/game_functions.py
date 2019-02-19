@@ -8,6 +8,12 @@ from alien import Alien
 from explosion import Explosion
 import random
 from special_ship import Special_Ship
+from sounds import Sounds
+
+#Global Objects
+# load sounds
+sounds_music = Sounds("sounds/Bomberman Hero.mp3")
+sounds_shot = Sounds("sounds/shoot.mp3")
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet, stats):
@@ -18,12 +24,15 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet)
+        #Here
+        #sounds_shot.play_sound(0)
     elif event.key == pygame.K_q:
         sys.exit()
     elif event.key == pygame.K_RETURN:
         stats.game_active = True
+        sounds_music.play_music()
 
-        
+
 def check_keyup_events(event, ship):
     """Respond to key releases."""
     if event.key == pygame.K_RIGHT:
@@ -119,7 +128,6 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     """Update images on the screen, and flip to the new screen."""
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
-
     
     # Redraw all bullets, behind ship and aliens.
     for bullet in bullets.sprites():
@@ -289,7 +297,7 @@ def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_
     check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_sheet)
 
     #spawn special alien based on rng
-    #here #20000 seems good
+    #20000 seems good
     spawn_rng = random.randint(0, 20000)
     if spawn_rng <= ai_settings.special_ship_spawn_rate:
         new_special_ship = Special_Ship(screen, sprite_sheet)

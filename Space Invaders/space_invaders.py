@@ -11,6 +11,7 @@ import game_functions as gf
 from explosion import Explosion
 from main_menu import Main_Menu
 from special_ship import Special_Ship
+from sounds import Sounds
 
 
 def run_game():
