@@ -14,8 +14,6 @@ class SpriteSheet:
         self.cell_list = list([(index % cols * self.cell_width, int(index / cols) * self.cell_height,
                                 self.cell_width, self.cell_height) for index in range(self.total_cell_count)])
 
-
-
     def sprite_sheet_log(self):
         for list in self.cell_list:
             print(list)

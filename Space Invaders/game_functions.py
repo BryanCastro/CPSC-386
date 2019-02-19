@@ -8,7 +8,8 @@ from alien import Alien
 from explosion import Explosion
 import random
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet):
+
+def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet, stats):
     """Respond to keypresses."""
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -18,6 +19,9 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet
         fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet)
     elif event.key == pygame.K_q:
         sys.exit()
+    elif event.key == pygame.K_RETURN:
+        stats.game_active = True
+
         
 def check_keyup_events(event, ship):
     """Respond to key releases."""
@@ -26,6 +30,7 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
+
 def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens,
         bullets, sprite_sheet):
     """Respond to keypresses and mouse events."""
@@ -33,7 +38,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens,
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet)
+            check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet, stats)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -77,6 +82,7 @@ def fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet):
         new_bullet = Bullet(ai_settings, screen, ship, sprite_sheet)
         bullets.add(new_bullet)
 
+
 def alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets):
 
     shoot_rand = random.randint(1, 10000)
@@ -108,10 +114,11 @@ def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_she
 
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
-        play_button, explosions, sprite_sheet, alien_bullets):
+        play_button, explosions, sprite_sheet, alien_bullets, main_menu):
     """Update images on the screen, and flip to the new screen."""
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
+
     
     # Redraw all bullets, behind ship and aliens.
     for bullet in bullets.sprites():
@@ -139,7 +146,8 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
 
     # Make the most recently drawn screen visible.
     pygame.display.flip()
-    
+
+
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explosion, sprite_sheet):
     """Update position of bullets, and get rid of old bullets."""
     # Update bullet positions.
@@ -152,13 +160,15 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explos
             
     check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
         aliens, bullets, explosion, sprite_sheet)
-        
+
+
 def check_high_score(stats, sb):
     """Check to see if there's a new high score."""
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sb.prep_high_score()
-            
+
+
 def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
         aliens, bullets, explosions, sprite_sheet):
     """Respond to bullet-alien collisions."""
@@ -187,19 +197,22 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
         sb.prep_level()
         
         create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
-    
+
+
 def check_fleet_edges(ai_settings, aliens):
     """Respond appropriately if any aliens have reached an edge."""
     for alien in aliens.sprites():
         if alien.check_edges():
             change_fleet_direction(ai_settings, aliens)
             break
+
         
 def change_fleet_direction(ai_settings, aliens):
     """Drop the entire fleet, and change the fleet's direction."""
     for alien in aliens.sprites():
         alien.rect.y += ai_settings.fleet_drop_speed
     ai_settings.fleet_direction *= -1
+
     
 def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets, sprite_sheet):
     """Respond to ship being hit by alien."""
