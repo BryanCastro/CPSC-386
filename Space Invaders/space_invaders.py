@@ -45,6 +45,7 @@ def run_game():
     aliens = Group()
     alien_bullets = Group()
     explosions = []
+    ship_explosions = []
     #special_ship = Special_Ship(screen, sprite_sheet)
     special_ships = Group()
     bunkers = Group()
@@ -59,6 +60,9 @@ def run_game():
     # Create the fleet of aliens.
     gf.create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
 
+    #ship explosion
+    ship_explosions_sheet = SpriteSheet("images/SpriteSheet/Ship_Explosion_2.png", 6, 2)
+
     # Start the main loop for the game.
     while True:
         gf.check_events(ai_settings, screen, stats, sb, play_button, ship,
@@ -68,7 +72,8 @@ def run_game():
         if stats.game_active:
             gf.update_screen(ai_settings, screen, stats, sb, ship, aliens,
                              bullets, play_button, explosions, sprite_sheet, alien_bullets, main_menu, special_ships,
-                             high_scores_screen, bunkers, explosions, special_ships, high_scores_screen)
+                             high_scores_screen, bunkers, explosions, special_ships, high_scores_screen,
+                             ship_explosions_sheet, ship_explosions)
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens,
                 bullets, explosions, sprite_sheet, special_ships, bunkers, alien_bullets)

@@ -23,7 +23,7 @@ class Settings():
         # Alien settings.
         self.fleet_drop_speed = 10
         self.alien_bullets_allowed = 1
-        self.alien_shoot_rng = 10000
+        self.alien_shoot_rng = 500
         self.alien_subtract_rng = 300
             
         # How quickly the game speeds up.
