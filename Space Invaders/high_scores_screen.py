@@ -22,10 +22,9 @@ class High_Scores_Screen:
     def position_scores(self):
 
         self.y = 250
-        for line in self.scores_txt:
-            self.scores_txt.remove(line)
-        for line in self.high_scores.score_list:
-            self.high_scores.score_list.remove(line)
+
+        self.scores_txt.clear()
+        self.high_scores.score_list.clear()
 
         self.high_scores.update_scores()
 
@@ -46,6 +45,8 @@ class High_Scores_Screen:
     def draw_high_scores(self):
         self.scores_title.display_text()
         self.backspace_text.display_text()
+
+        print(len(self.scores_txt))
 
         for line in self.scores_txt:
             line.display_text()
