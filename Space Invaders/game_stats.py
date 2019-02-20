@@ -8,6 +8,8 @@ class GameStats():
         
         # Start game in an inactive state.
         self.game_active = False
+        self.menu_active = True
+        self.high_score_active = False
         
         # High score should never be reset.
         self.high_score = 0

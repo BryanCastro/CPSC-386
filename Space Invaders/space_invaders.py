@@ -12,7 +12,8 @@ from explosion import Explosion
 from main_menu import Main_Menu
 from special_ship import Special_Ship
 from sounds import Sounds
-
+from high_scores_screen import High_Scores_Screen
+from bunker import Bunker
 
 def run_game():
     # Initialize pygame, settings, and screen object.
@@ -46,9 +47,14 @@ def run_game():
     explosions = []
     #special_ship = Special_Ship(screen, sprite_sheet)
     special_ships = Group()
+    bunkers = Group()
 
     #make main menu
     main_menu = Main_Menu(screen, sprite_sheet)
+
+    #high_scores_object
+
+    high_scores_screen = High_Scores_Screen(screen)
 
     # Create the fleet of aliens.
     gf.create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
@@ -56,22 +62,26 @@ def run_game():
     # Start the main loop for the game.
     while True:
         gf.check_events(ai_settings, screen, stats, sb, play_button, ship,
-            aliens, bullets, sprite_sheet)
+            aliens, bullets, sprite_sheet, bunkers)
 
 
         if stats.game_active:
             gf.update_screen(ai_settings, screen, stats, sb, ship, aliens,
-                             bullets, play_button, explosions, sprite_sheet, alien_bullets, main_menu, special_ships)
+                             bullets, play_button, explosions, sprite_sheet, alien_bullets, main_menu, special_ships,
+                             high_scores_screen, bunkers, explosions, special_ships, high_scores_screen)
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens,
-                bullets, explosions, sprite_sheet, special_ships)
+                bullets, explosions, sprite_sheet, special_ships, bunkers, alien_bullets)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens,
-                bullets, sprite_sheet, special_ships)
-        else:
+                bullets, sprite_sheet, special_ships, high_scores_screen)
+        elif stats.menu_active:
             screen.fill(bg_color)
             #special_ship.movement()
             #special_ship.blit_special_ship()
             main_menu.render_menu()
+        elif stats.high_score_active:
+            screen.fill(bg_color)
+            high_scores_screen.draw_high_scores()
 
         clock.tick(Settings.fps)
 

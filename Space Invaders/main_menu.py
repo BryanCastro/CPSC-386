@@ -16,10 +16,15 @@ class Main_Menu:
         self.set_text_position_menu(self.space_invaders_title, 4, 6)
 
         #Get Press Enter Text
-        self.press_enter_text = Text(screen, "Press Enter", (0, 255, 0), (0, 0, 0),
-                                         self.screen_area.w, self.screen_area.h, 48)
-        self.set_text_position_menu(self.press_enter_text, 2, 4, -100)
+        self.press_enter_text = Text(screen, "Press Enter To Start Game", (0, 255, 0), (0, 0, 0),
+                                         self.screen_area.w, self.screen_area.h, 30)
+        self.set_text_position_menu(self.press_enter_text, 2, 4)
         #self.press_enter_text.textrect.x = self.press_enter_text.textrect.x / 2
+
+        #Get Press H Text
+        self.press_highscores_text = Text(screen, "Press H To View High Scores", (0, 255, 0), (0, 0, 0),
+                                          self.screen_area.w, self.screen_area.h, 30)
+        self.set_text_position_menu(self.press_highscores_text, 2, 4, 0, 50)
 
         #alein score texts
         self.alien_points_1_text = Text(screen, "10 Points", (255, 255, 255), (0, 0, 0),
@@ -66,6 +71,7 @@ class Main_Menu:
     def render_menu(self):
         self.space_invaders_title.display_text()
         self.press_enter_text.display_text()
+        self.press_highscores_text.display_text()
         #Render Text
         self.alien_points_1_text.display_text()
         self.alien_points_2_text.display_text()
