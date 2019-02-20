@@ -15,14 +15,16 @@ class Settings():
         self.ship_limit = 3
             
         # Bullet settings.
-        self.bullet_width = 3
+        self.bullet_width = 5
         self.bullet_height = 15
         self.bullet_color = 255, 0, 0
-        self.bullets_allowed = 6
+        self.bullets_allowed = 100
         
         # Alien settings.
         self.fleet_drop_speed = 10
         self.alien_bullets_allowed = 1
+        self.alien_shoot_rng = 10000
+        self.alien_subtract_rng = 300
             
         # How quickly the game speeds up.
         self.speedup_scale = 1.1
@@ -36,6 +38,11 @@ class Settings():
 
         #special ship spawn rate
         self.special_ship_spawn_rate = 5
+
+        #music
+        self.first_switch = False
+        self.second_switch = False
+
 
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""

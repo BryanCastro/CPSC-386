@@ -24,21 +24,20 @@ class High_Scores_Screen:
         self.y = 250
         for line in self.scores_txt:
             self.scores_txt.remove(line)
+        for line in self.high_scores.score_list:
+            self.high_scores.score_list.remove(line)
 
-
+        self.high_scores.update_scores()
 
         for line in self.high_scores.score_list:
-            self.scores_txt.append(Text(self.screen, line, (255, 255, 255), (0, 0, 0),
+            self.scores_txt.append(Text(self.screen, str(line), (255, 255, 255), (0, 0, 0),
                                         self.screen_area.w, self.y, 48))
             self.y += 50
 
-        print(len(self.scores_txt))
 
         for line in self.scores_txt:
             self.set_text_position_menu(line, 2, 1, -100, 0)
 
-        for line in self.scores_txt:
-            self.scores_txt.remove(line)
 
     def set_text_position_menu(self, textObj, x_div, y_div, x_offset = 0, y_offset = 0):
         textObj.textrect.x = (textObj.textrect.x / x_div) + x_offset
@@ -47,6 +46,7 @@ class High_Scores_Screen:
     def draw_high_scores(self):
         self.scores_title.display_text()
         self.backspace_text.display_text()
+
         for line in self.scores_txt:
             line.display_text()
 

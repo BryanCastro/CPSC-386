@@ -19,7 +19,7 @@ class High_Scores:
         #        self.initials.append(line.strip().split(",")[0])
 
         self.score_list = []
-        self.update_scores()
+        #self.update_scores()
 
 
     def update_scores(self):
@@ -27,18 +27,17 @@ class High_Scores:
         for line in self.score_list:
             self.score_list.remove(line)
 
-        print("udated scores" + str(len(self.score_list)))
 
         with open(r"txt_files/high_scores.txt", "r+") as f:
             data = f.readlines()
+            print(len(data))
             for line in data:
-                self.score_list.append(line.strip('\n'))
-                #print(line.strip('\n'))
+                self.score_list.append(int(line.strip("\n")))
 
-        f.close()
+        self.score_list.sort(reverse = True)
 
     def add_score(self, score):
         with open("txt_files/high_scores.txt", "a") as myFile:
             myFile.write("\n" + score)
+            myFile.close()
 
-        myFile.close()

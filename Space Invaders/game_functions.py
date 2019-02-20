@@ -13,8 +13,11 @@ from bunker import Bunker
 
 #Global Objects
 # load sounds
-sounds_music = Sounds("sounds/Bomberman Hero.mp3")
-sounds_shot = Sounds("sounds/shoot.mp3")
+sounds_music_start = Sounds("sounds/laserattack_music_start.mp3")
+sounds_music_mid = Sounds("sounds/laserattack_music_mid.wav")
+sounds_music_end = Sounds("sounds/laserattack_music_end.mp3")
+sounds_shot = Sounds("sounds/laser.wav")
+sounds_explosion = Sounds("sounds/8-bit-death.wav")
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet, stats, sb, play_button,
@@ -28,7 +31,6 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet)
         #Here
-        #sounds_shot.play_sound(0)
     elif event.key == pygame.K_q:
         sys.exit()
     elif event.key == pygame.K_RETURN:
@@ -37,7 +39,7 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, sprite_sheet
         stats.game_active = True
         stats.menu_active = False
         stats.high_score_active = False
-        sounds_music.play_music()
+        sounds_music_start.play_music()
     elif event.key == pygame.K_h:
         stats.game_active = False
         stats.menu_active = False
@@ -70,6 +72,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens,
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            sounds_music_start.play_music()
             mouse_x, mouse_y = pygame.mouse.get_pos()
             check_play_button(ai_settings, screen, stats, sb, play_button,
                 ship, aliens, bullets, mouse_x, mouse_y, sprite_sheet, bunkers)
@@ -106,18 +109,22 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship,
 
         create_bunker_row(ai_settings, screen, ship, aliens, bunkers)
 
+        ai_settings.first_switch = False
+        ai_settings.second_switch = False
+
 def fire_bullet(ai_settings, screen, ship, bullets, sprite_sheet):
     """Fire a bullet, if limit not reached yet."""
     # Create a new bullet, add to bullets group.
     if len(bullets) < ai_settings.bullets_allowed:
+        sounds_shot.play_sound()
         new_bullet = Bullet(ai_settings, screen, ship, sprite_sheet)
         bullets.add(new_bullet)
 
 
-def alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets):
+def alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets, stats):
 
     #default (1, 10000)
-    shoot_rand = random.randint(1, 100)
+    shoot_rand = random.randint(1, ai_settings.alien_shoot_rng - ai_settings.alien_subtract_rng * stats.level)
 
     if shoot_rand <= 1:
         new_bullet = Bullet(ai_settings, screen, alien, sprite_sheet)
@@ -150,12 +157,11 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
                   explosion, special_ships, high_scores_screen):
     """Update images on the screen, and flip to the new screen."""
     if stats.ships_left < 0:
-        stats.game_active = False
         #Here
         high_score_screen.high_scores.add_score(str(stats.score))
-        high_score_screen.high_scores.update_scores()
         high_scores_screen.position_scores()
         stats.menu_active = False
+        stats.game_active = False
         stats.high_score_active = True
 
 
@@ -164,6 +170,7 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
 
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
+
     
     # Redraw all bullets, behind ship and aliens.
     for bullet in bullets.sprites():
@@ -172,7 +179,7 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     #aliens.draw(screen)
     for alien in aliens.sprites():
         alien.blitme()
-        alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets)
+        alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets, stats)
 
     alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb)
 
@@ -188,6 +195,7 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
 
     #Draw Explosions
     for exp in explosions:
+        sounds_explosion.play_sound()
         exp.draw_explosion()
         if exp.explosion_done == True:
             explosions.remove(exp)
@@ -202,6 +210,17 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
     # Make the most recently drawn screen visible.
     pygame.display.flip()
 
+    if len(aliens) < 30 and not ai_settings.first_switch:
+        sounds_music_start.stop_music()
+        sounds_music_mid.play_music()
+        ai_settings.first_switch = True
+
+    if len(aliens) < 15 and not ai_settings.second_switch:
+        sounds_music_mid.stop_music()
+        sounds_music_end.play_music()
+        ai_settings.second_switch = True
+
+
 
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explosion, sprite_sheet,
                    special_ships, bunkers, alien_bullets):
@@ -215,7 +234,7 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, explos
             bullets.remove(bullet)
             
     check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
-        aliens, bullets, explosion, sprite_sheet, special_ships)
+        aliens, bullets, explosion, sprite_sheet, special_ships, bunkers)
 
     #here
    ##check_bunker_bullet_collisions(ai_settings, screen, stats, sb, ship,
@@ -228,6 +247,7 @@ def check_high_score(stats, sb):
         stats.high_score = stats.score
         sb.prep_high_score()
 
+
 def check_bunker_bullet_collisions(ai_settings, screen, stats, sb, ship,
         aliens, bullets, explosions, sprite_sheet, special_ships, bunkers, alien_bullets):
 
@@ -235,7 +255,7 @@ def check_bunker_bullet_collisions(ai_settings, screen, stats, sb, ship,
     for hit in collisions:
         hit.bunkerDamage()
         if hit.index >=hit.index_max:
-            new_explosion = Explosion(sprite_sheet, screen, 15, 16, 18, 19)
+            new_explosion = Explosion(sprite_sheet, screen, 3, 4, 6, 7)
             new_explosion.rect = pygame.Rect(hit.rect)
             new_explosion.rect.centerx = hit.rect.centerx
             explosions.append(new_explosion)
@@ -245,17 +265,15 @@ def check_bunker_bullet_collisions(ai_settings, screen, stats, sb, ship,
     for hit in collisions:
         hit.bunkerDamage()
         if hit.index >=hit.index_max:
-            new_explosion = Explosion(sprite_sheet, screen, 15, 16, 18, 19)
+            new_explosion = Explosion(sprite_sheet, screen, 3, 4, 6, 7)
             new_explosion.rect = pygame.Rect(hit.rect)
             new_explosion.rect.centerx = hit.rect.centerx
             explosions.append(new_explosion)
             bunkers.remove(hit)
 
 
-
-
 def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
-        aliens, bullets, explosions, sprite_sheet, special_ships):
+        aliens, bullets, explosions, sprite_sheet, special_ships, bunkers):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     collisions = pygame.sprite.groupcollide(aliens, bullets, True, True)
@@ -291,13 +309,18 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
     if len(aliens) == 0:
         # If the entire fleet is destroyed, start a new level.
         bullets.empty()
+
         ai_settings.increase_speed()
         
         # Increase level.
         stats.level += 1
         sb.prep_level()
+        ai_settings.first_switch = False
+        ai_settings.second_switch = False
+        sounds_music_start.play_music()
         
         create_fleet(ai_settings, screen, ship, aliens, sprite_sheet)
+        create_bunker_row(ai_settings, screen, ship, aliens, bunkers)
 
 
 def check_fleet_edges(ai_settings, aliens):
@@ -409,11 +432,11 @@ def create_fleet(ai_settings, screen, ship, aliens, sprite_sheet):
                 row_number, sprite_sheet)
 
 def create_bunker_row(ai_settings, screen, ship, aliens, bunkers):
-    num_of_bunkers = 5
+    num_of_bunkers = 6
     bunk_spawn = ai_settings.screen_width / num_of_bunkers
 
     for bunk in range(num_of_bunkers):
         new_bunker = Bunker(screen)
         new_bunker.rect.y = ship.rect.y - ship.rect.w
-        new_bunker.rect.x = bunk_spawn *(bunk + 1)
+        new_bunker.rect.x = bunk_spawn *(bunk)
         bunkers.add(new_bunker)
