@@ -18,12 +18,12 @@ class Settings():
         self.bullet_width = 5
         self.bullet_height = 15
         self.bullet_color = 255, 0, 0
-        self.bullets_allowed = 100
+        self.bullets_allowed = 10
         
         # Alien settings.
         self.fleet_drop_speed = 10
         self.alien_bullets_allowed = 1
-        self.alien_shoot_rng = 10000
+        self.alien_shoot_rng = 500
         self.alien_subtract_rng = 300
             
         # How quickly the game speeds up.

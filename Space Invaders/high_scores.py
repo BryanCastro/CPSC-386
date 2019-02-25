@@ -24,13 +24,10 @@ class High_Scores:
 
     def update_scores(self):
 
-        for line in self.score_list:
-            self.score_list.remove(line)
-
+        self.score_list.clear()
 
         with open(r"txt_files/high_scores.txt", "r+") as f:
             data = f.readlines()
-            print(len(data))
             for line in data:
                 self.score_list.append(int(line.strip("\n")))
 

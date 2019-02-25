@@ -10,6 +10,7 @@ import random
 from special_ship import Special_Ship
 from sounds import Sounds
 from bunker import Bunker
+from sprite_sheet import  SpriteSheet
 
 #Global Objects
 # load sounds
@@ -131,7 +132,8 @@ def alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets, stats):
         alien_bullets.add(new_bullet)
 
 
-def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb):
+def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb,
+                        ship_explosions_sheet, ship_explosions):
 
     for bullet in alien_bullets.copy():
         bullet.y += bullet.speed_factor
@@ -142,10 +144,10 @@ def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_she
                 alien_bullets.remove(bullet)
         elif bullet.rect.y >= ship.rect.y and bullet.rect.x <= ship.rect.right and bullet.rect.x >=ship.rect.left:
             alien_bullets.remove(bullet)
-            new_explosion = Explosion(sprite_sheet, screen, 3, 4, 6, 7)
+            new_explosion = Explosion(ship_explosions_sheet, screen)
             new_explosion.rect = pygame.Rect(ship.rect)
             new_explosion.rect.centerx = ship.rect.centerx
-            explosions.append(new_explosion)
+            ship_explosions.append(new_explosion)
             ship.ship_destroyed = True
             stats.ships_left -= 1
             sb.prep_ships()
@@ -154,7 +156,7 @@ def alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_she
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
         play_button, explosions, sprite_sheet, alien_bullets, main_menu, special_ship, high_score_screen, bunkers,
-                  explosion, special_ships, high_scores_screen):
+                  explosion, special_ships, high_scores_screen, ship_explosions_sheet, ship_explosions):
     """Update images on the screen, and flip to the new screen."""
     if stats.ships_left < 0:
         #Here
@@ -181,7 +183,8 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
         alien.blitme()
         alien_shoot(ai_settings, screen, alien, sprite_sheet, alien_bullets, stats)
 
-    alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb)
+    alien_bullet_update(alien_bullets, ai_settings, ship, explosions, sprite_sheet, screen, stats, sb,
+                        ship_explosions_sheet, ship_explosions)
 
     #Draw special alien(screen)
     for special in special_ship:
@@ -199,6 +202,12 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
         exp.draw_explosion()
         if exp.explosion_done == True:
             explosions.remove(exp)
+
+    for exp in ship_explosions:
+        sounds_explosion.play_sound()
+        exp.draw_ship_explosion()
+        if exp.explosion_done == True:
+            ship_explosions.remove(exp)
 
     # Draw the score information.
     sb.show_score()
