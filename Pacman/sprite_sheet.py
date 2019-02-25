@@ -1,15 +1,17 @@
 import pygame
-import re
-import pandas as pd
 
 class Sprite_Sheet:
 
-    def __init__(self, sheet_file, xml_file):
+    def __init__(self, sheet_file, xml_file, screen):
+        self.screen = screen
         self.sheet = pygame.image.load(sheet_file).convert_alpha()
-        self.filepath = xml_file
+        self.file_path = xml_file
+        self.revised_file = "revised.txt"
         self.dataDict = {}
+        self.__read_xml()
 
-    def parse_line(self, source, target, target_x, target_y, target_w, target_h):
+########START-Used to clean up xml file-START###########
+    def __parse_line(self, source):
 
         key = ""
         x = 0
@@ -17,53 +19,98 @@ class Sprite_Sheet:
         w = 0
         h = 0
         add_to_dict = False
+        store = str(source)
 
-        for i, t in enumerate(source):
-            if t == target:
-                key = source[i + 1].replace('"', '')
+        for line in store.split():
+            if "n=" in line:
                 add_to_dict = True
-            if t == target_x:
-                x = int(source[i + 1].replace('"', ''))
-            if t == target_y:
-                y = int(source[i + 1].replace('"', ''))
-            if t == target_w:
-                w = int(source[i + 1].replace('"', ''))
-            if t == target_h:
-                h = int(source[i + 1].replace('"', ''))
+                key = self.__clean_string("n=", line)
+            elif "x=" in line:
+                x = self.__clean_string("x=", line, True)
+            elif "y=" in line:
+                y = self.__clean_string("y=", line, True)
+            elif "w=" in line:
+                w = self.__clean_string("w=", line, True)
+            elif "h=" in line:
+                h = self.__clean_string("h=", line, True)
 
         if add_to_dict:
-            print(key)
-            print(w)
             self.dataDict[key] = pygame.Rect(x, y, w, h)
             add_to_dict = False
 
-    def read_xml(self):
-        with open(self.filepath, 'r') as file:
+    def __read_xml(self):
+
+        fixed_file = open(self.revised_file, "w+")
+
+        with open(self.file_path, 'r') as file:
             file_context = file.readlines()
             for line in file_context:
-                self.parse_line(line.split(), "n=", "x=", "y=", "w=", "h=")
+                nl = self.__remove_unecessaries(line.split())
+                fixed_file.write(nl)
+
+        fixed_file.close()
+
+        with open(self.revised_file, 'r') as file:
+            file_context = file.readlines()
+            for line in file_context:
+                self.__parse_line(line.split())
 
         return self.dataDict
 
     def print_dic_log(self):
+        print("printing dic\n")
         print(self.dataDict)
 
-    def test_sprite(self, screen, sprite_crop, testing = False, transform_size = 0):
-        if testing:
-           # print(sprite_crop)
+    def __remove_unecessaries(self, source):
+        store = str(source)
+        newline=""
 
+        for line in store.split():
+            if "oX=" in line:
+               self.__clean_string("oX=", line)
+            elif "oY=" in line:
+                self.__clean_string("oY=", line)
+            elif "oW=" in line:
+                self.__clean_string("oW=", line)
+            elif "oH=" in line:
+                self.__clean_string("oH=", line)
+            else:
+                newline += " " + line
 
-            transform_divsor = sprite_crop.w / transform_size
-            new_crop = pygame.Rect(0,0,0,0)
-            new_crop.x = float(sprite_crop.x/transform_divsor)
-            new_crop.y = float(sprite_crop.y/transform_divsor)
-            new_crop.w = float(sprite_crop.w/transform_divsor)
-            new_crop.h = float(sprite_crop.h/transform_divsor)
-            subsurface_test = self.sheet.subsurface((sprite_crop))
-            #print(new_crop)
-            #screen.blit(pygame.transform.scale(self.sheet, (transform_size, transform_size)), (0, 0, 0, 0), new_crop)
-            testin = pygame.transform.scale(subsurface_test, (transform_size, transform_size))
-            screen.blit(testin, (0,0,0,0))
+        newline = newline.replace("'", '')
+        newline += '\n'
+        return newline
+
+    def __clean_string(self, str_find, line, return_int=False):
+        line = line.replace(str_find, '')
+        line = line.replace('"', '')
+        line = line.replace(',', '')
+        line = line.replace("'", '')
+        line = line.replace("/>", '')
+        line = line.replace("]", '')
+
+        if not return_int:
+            return line
         else:
-            screen.blit(self.sheet, (0, 0, 0, 0), sprite_crop)
+            return int(line)
+
+########END-Used to clean up xml file-END###########
+
+
+    def render_sprite(self, sprite_crop, sprite_position, transform_sprite=False, transform_size=0):
+        if transform_sprite:
+            #transform_divsor = sprite_crop.w / transform_size
+            #new_crop = pygame.Rect(0,0,0,0)
+            #new_crop.x = float(sprite_crop.x/transform_divsor)
+            #new_crop.y = float(sprite_crop.y/transform_divsor)
+            #new_crop.w = float(sprite_crop.w/transform_divsor)
+            #new_crop.h = float(sprite_crop.h/transform_divsor)
+
+            #screen.blit(pygame.transform.scale(self.sheet, (transform_size, transform_size)), (0, 0, 0, 0), new_crop)
+            subsurface_test = self.sheet.subsurface(sprite_crop)
+            scaled_sprite = pygame.transform.scale(subsurface_test, (transform_size, transform_size))
+
+            self.screen.blit(scaled_sprite, sprite_position)
+        else:
+            self.screen.blit(self.sheet, sprite_position, sprite_crop)
 #

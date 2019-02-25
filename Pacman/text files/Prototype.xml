@@ -1,66 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:211270895b24b75e505aefaae4025c3f:9a1bdc07322ced135ee982ee98173231:2d8bab0a1d594367a9e98e7fa284de95$ -->
-<!--Format:
-n  => name of the sprite
-x  => sprite x pos in texture
-y  => sprite y pos in texture
-w  => sprite width (may be trimmed)
-h  => sprite height (may be trimmed)
-pX => x pos of the pivot point (relative to sprite width)
-pY => y pos of the pivot point (relative to sprite height)
-oX => sprite's x-corner offset (only available if trimmed)
-oY => sprite's y-corner offset (only available if trimmed)
-oW => sprite's original width (only available if trimmed)
-oH => sprite's original height (only available if trimmed)
-r => 'y' only set if sprite is rotated
-with polygon mode enabled:
-vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
-verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
-triangles  => sprite triangulation, 3 vertex indices per triangle
--->
-<TextureAtlas imagePath="Prototype.png" width="731" height="125">
-    <sprite n= "Blue_Ghost_Down.png" x= "1" y= "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Blue_Ghost_Left.png" x= "67" y= "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Blue_Ghost_Right.png" x= "129" y= "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Blue_Ghost_Up.png" x= "133" y= "67" w=   "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y"  />
-    <sprite n= "Border_00.png" x= "722" y= "26" w= "8" h= "8" />
-    <sprite n= "Border_01.png" x= "721" y= "36" w= "8" h= "8" />
-    <sprite n= "Border_02.png" x= "721" y= "46" w= "8" h= "8" />
-    <sprite n= "Border_03.png" x= "721" y= "56" w= "8" h= "8" />
-    <sprite n= "Border_04.png" x= "710" y= "67" w= "8" h= "4" oX="0" oY="0" oW="8" oH="8" />
-    <sprite n= "Border_05.png" x= "692" y= "109" w= "4" h= "8" oX="0" oY="0" oW="8" oH="8" />
-    <sprite n= "Border_06.png" x= "698" y= "109" w= "8" h= "4" oX="0" oY="4" oW="8" oH="8" />
-    <sprite n= "Border_07.png" x= "698" y= "115" w= "4" h= "8" oX="4" oY="0" oW="8" oH="8" />
-    <sprite n= "Border_08.png" x= "704" y= "118" w= "5" h= "5" oX="3" oY="3" oW="8" oH="8" />
-    <sprite n= "Border_09.png" x= "711" y= "118" w= "5" h= "5" oX="0" oY="3" oW="8" oH="8" />
-    <sprite n= "Border_10.png" x= "718" y= "118" w= "5" h= "5" oX="3" oY="0" oW="8" oH="8" />
-    <sprite n= "Border_11.png" x= "725" y= "118" w= "5" h= "5" oX="0" oY="0" oW="8" oH="8" />
-    <sprite n= "Border_12.png" x= "721" y= "66" w= "8" h= "8" />
-    <sprite n= "Ghost_Eyes_Down.png" x= "679" y= "31" w= "40" h= "16" oX="12" oY="19" oW="64" oH="64" />
-    <sprite n= "Ghost_Eyes_Left.png" x= "679" y= "49" w= "40" h= "16" oX="12" oY="19" oW="64" oH="64" />
-    <sprite n= "Ghost_Eyes_Right.png" x= "692" y= "67" w= "16" h= "40" oX="12" oY="19" oW="64" oH="64" r="y" />
-    <sprite n= "Ghost_Eyes_Up.png" x= "710" y= "76" w= "16" h= "40" oX="12" oY="19" oW="64" oH="64" r="y" />
-    <sprite n= "Ghost_Spooked.png" x= "188" y= "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Orange_Ghost_Down.png" x= "199" y=  "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Orange_Ghost_Left.png" x= "247" y=  "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Orange_Ghost_Right.png" x= "265" y=  "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Orange_Ghost_Up.png" x= "306" y=  "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Pacman_Closed.png" x= "1" y=  "1" w= "64" h= "64" />
-    <sprite n= "Pacman_Death_1.png" x= "601" y= "1" w= "44" h= "64" oX="0" oY="0" oW="64" oH="64" />
-    <sprite n= "Pacman_Death_2.png" x= "647" y= "1" w= "30" h= "64" oX="0" oY="0" oW="64" oH="64" />
-    <sprite n= "Pacman_Death_3.png" x= "661" y= "67" w= "29" h= "54" oX="0" oY="5" oW="64" oH="64" />
-    <sprite n= "Pacman_Death_4.png" x= "679" y= "1" w= "36" h= "28" oX="0" oY="16" oW="64" oH="64" r="y" />
-    <sprite n= "Pacman_Death_5.png" x= "717" y= "1" w= "10" h= "23" oX="0" oY="30" oW="64" oH="64" r="y" />
-    <sprite n= "Pacman_Death_6.png" x= "717" y= "26" w= "3" h= "3" oX="0" oY="0" oW="64" oH="64" />
-    <sprite n= "Pacman_Full_Open.png" x= "595" y= "67" w= "64" h= "53" oX="0" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Pacman_Semi_Open.png" x= "67" y= "1" w= "60" h= "64" oX="0" oY="0" oW="64" oH="64" />
-    <sprite n= "Pink_Ghost_Down.png" x= "331" y= "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Pink_Ghost_Left.png" x= "365" y= "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Pink_Ghost_Right.png" x= "397" y= "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Pink_Ghost_Up.png" x= "424" y= "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Red_Ghost_Down.png" x= "463" y= "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Red_Ghost_Left.png" x= "483" y= "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-    <sprite n= "Red_Ghost_Right.png" x= "529" y= "67" w= "64" h= "57" oX="3" oY="0" oW="64" oH="64" r="y" />
-    <sprite n= "Red_Ghost_Up.png" x= "542" y= "1" w= "57" h= "64" oX="3" oY="0" oW="64" oH="64" />
-</TextureAtlas>
+<sprite n="Blue_Ghost_Down.png" x="1" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Blue_Ghost_Left.png" x="67" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Blue_Ghost_Right.png" x="129" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Blue_Ghost_Up.png" x="133" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Border_00.png" x="722" y="26" w="8" h="8"/>
+<sprite n="Border_01.png" x="721" y="36" w="8" h="8"/>
+<sprite n="Border_02.png" x="721" y="46" w="8" h="8"/>
+<sprite n="Border_03.png" x="721" y="56" w="8" h="8"/>
+<sprite n="Border_04.png" x="710" y="67" w="8" h="4" oX="0" oY="0" oW="8" oH="8"/>
+<sprite n="Border_05.png" x="692" y="109" w="4" h="8" oX="0" oY="0" oW="8" oH="8"/>
+<sprite n="Border_06.png" x="698" y="109" w="8" h="4" oX="0" oY="4" oW="8" oH="8"/>
+<sprite n="Border_07.png" x="698" y="115" w="4" h="8" oX="4" oY="0" oW="8" oH="8"/>
+<sprite n="Border_08.png" x="704" y="118" w="5" h="5" oX="3" oY="3" oW="8" oH="8"/>
+<sprite n="Border_09.png" x="711" y="118" w="5" h="5" oX="0" oY="3" oW="8" oH="8"/>
+<sprite n="Border_10.png" x="718" y="118" w="5" h="5" oX="3" oY="0" oW="8" oH="8"/>
+<sprite n="Border_11.png" x="725" y="118" w="5" h="5" oX="0" oY="0" oW="8" oH="8"/>
+<sprite n="Border_12.png" x="721" y="66" w="8" h="8"/>
+<sprite n="Ghost_Eyes_Down.png" x="679" y="31" w="40" h="16" oX="12" oY="19" oW="64" oH="64"/>
+<sprite n="Ghost_Eyes_Left.png" x="679" y="49" w="40" h="16" oX="12" oY="19" oW="64" oH="64"/>
+<sprite n="Ghost_Eyes_Right.png" x="692" y="67" w="16" h="40" oX="12" oY="19" oW="64" oH="64" r="y"/>
+<sprite n="Ghost_Eyes_Up.png" x="710" y="76" w="16" h="40" oX="12" oY="19" oW="64" oH="64" r="y"/>
+<sprite n="Ghost_Spooked.png" x="188" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Orange_Ghost_Down.png" x="199" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Orange_Ghost_Left.png" x="247" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Orange_Ghost_Right.png" x="265" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Orange_Ghost_Up.png" x="306" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Pacman_Closed.png" x="1" y="1" w="64" h="64"/>
+<sprite n="Pacman_Death_1.png" x="601" y="1" w="44" h="64" oX="0" oY="0" oW="64" oH="64"/>
+<sprite n="Pacman_Death_2.png" x="647" y="1" w="30" h="64" oX="0" oY="0" oW="64" oH="64"/>
+<sprite n="Pacman_Death_3.png" x="661" y="67" w="29" h="54" oX="0" oY="5" oW="64" oH="64"/>
+<sprite n="Pacman_Death_4.png" x="679" y="1" w="36" h="28" oX="0" oY="16" oW="64" oH="64" r="y"/>
+<sprite n="Pacman_Death_5.png" x="717" y="1" w="10" h="23" oX="0" oY="30" oW="64" oH="64" r="y"/>
+<sprite n="Pacman_Death_6.png" x="717" y="26" w="3" h="3" oX="0" oY="0" oW="64" oH="64"/>
+<sprite n="Pacman_Full_Open.png" x="595" y="67" w="64" h="53" oX="0" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Pacman_Semi_Open.png" x="67" y="1" w="60" h="64" oX="0" oY="0" oW="64" oH="64"/>
+<sprite n="Pink_Ghost_Down.png" x="331" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Pink_Ghost_Left.png" x="365" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Pink_Ghost_Right.png" x="397" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Pink_Ghost_Up.png" x="424" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Red_Ghost_Down.png" x="463" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Red_Ghost_Left.png" x="483" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>
+<sprite n="Red_Ghost_Right.png" x="529" y="67" w="64" h="57" oX="3" oY="0" oW="64" oH="64" r="y"/>
+<sprite n="Red_Ghost_Up.png" x="542" y="1" w="57" h="64" oX="3" oY="0" oW="64" oH="64"/>

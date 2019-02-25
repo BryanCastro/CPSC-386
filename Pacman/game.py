@@ -2,6 +2,7 @@ import pygame
 import sys
 from main_menu import Main_Menu
 from sprite_sheet import Sprite_Sheet
+from character import Pacman
 
 
 class Game:
@@ -15,19 +16,21 @@ class Game:
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Test")
+        self.clock = pygame.time.Clock()
 
         #colors
         self.colors ={"Black": (0, 0, 0),
                  "Red": (255, 0, 0),
                  "Green": (0, 255, 0),
                  "Blue": (0, 0, 255),
-                "White": (255, 255, 255)}
+                 "White": (255, 255, 255)}
 
         #Create Objects Here
-        self.sprite_sheet = Sprite_Sheet("images/Prototype.png", "text files/Prototype.xml")
+        self.sprite_sheet = Sprite_Sheet("images/Prototype.png", "text files/Prototype.xml", self.screen)
 
         #Grabs sprite dictionary with cropping values
-        self.sprite_dictionary = self.sprite_sheet.read_xml()
+        self.sprite_dictionary = self.sprite_sheet.dataDict
+        self.Pacman_test = Pacman(self.screen, self.sprite_sheet)
 
         #Dubugging and Logs
         #self.sprite_sheet.print_dic_log()
@@ -42,8 +45,10 @@ class Game:
         self.screen.fill(self.colors[color])
 
     def __refresh_display(self):
-        self.sprite_sheet.test_sprite(self.screen, self.sprite_dictionary["Pacman_Closed.png"], True, 32)
+        #self.sprite_sheet.render_sprite(self.sprite_dictionary["Pacman_Closed.png"], (50, 50), True, 32)
+        self.Pacman_test.render_character()
         pygame.display.update()
+        self.clock.tick(3)
 
     def run_game(self):
 
