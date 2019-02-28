@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>xml</string>
         <key>textureFileName</key>
-        <filename>../images/Prototype.png</filename>
+        <filename>../images/Border_test.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -74,7 +74,7 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>1</uint>
+        <uint>0</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
@@ -102,7 +102,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>Prototype.xml</filename>
+                <filename>Border_test.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -149,7 +149,7 @@
             <string></string>
         </struct>
         <key>autoAliasEnabled</key>
-        <true/>
+        <false/>
         <key>trimSpriteNames</key>
         <false/>
         <key>prependSmartFolderName</key>
@@ -163,13 +163,13 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>5</uint>
+            <uint>0</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -181,48 +181,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Down.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Left.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Right.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Ghost_Eyes_Down.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Ghost_Eyes_Left.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Ghost_Eyes_Right.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Ghost_Eyes_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Ghost_Spooked.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Orange_Ghost_Down.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Orange_Ghost_Left.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Orange_Ghost_Right.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Orange_Ghost_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Pink_Ghost_Down.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Pink_Ghost_Left.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Pink_Ghost_Right.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Pink_Ghost_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Red_Ghost_Down.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Red_Ghost_Left.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Red_Ghost_Right.png</key>
-            <key type="filename">../images/Base_Pngs/Ghost_Pngs/Red_Ghost_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Closed.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_1.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_2.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_3.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_4.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_5.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_6.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Full_Open.png</key>
-            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Semi_Open.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,16,32,32</rect>
-                <key>scale9Paddings</key>
-                <rect>16,16,32,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Dn_Up.png</key>
             <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Up_Dn_Lt.png</key>
             <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Up_Dn_Rt.png</key>
@@ -248,12 +206,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Closed.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_1.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_2.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_3.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_4.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_5.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_6.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Full_Open.png</key>
+            <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Semi_Open.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../images/Base_Pngs/Ghost_Pngs</filename>
-            <filename>../images/Base_Pngs/Pacman_Pngs</filename>
             <filename>../images/Base_Pngs/Level_Border</filename>
+            <filename>../images/Base_Pngs/Pacman_Pngs</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

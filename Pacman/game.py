@@ -3,6 +3,7 @@ import sys
 from main_menu import Main_Menu
 from sprite_sheet import Sprite_Sheet
 from character import Pacman
+from maze import Maze
 
 
 class Game:
@@ -27,10 +28,9 @@ class Game:
 
         #Create Objects Here
         self.sprite_sheet = Sprite_Sheet("images/Prototype.png", "text files/Prototype.xml", self.screen)
-
-        #Grabs sprite dictionary with cropping values
         self.sprite_dictionary = self.sprite_sheet.dataDict
-        self.Pacman_test = Pacman(self.screen, self.sprite_sheet)
+        self.maze = Maze(self.screen, self.sprite_sheet, "text files/pacmanportalmaze.txt")
+        self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size)
 
         #Dubugging and Logs
         #self.sprite_sheet.print_dic_log()
@@ -40,15 +40,24 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+               self.pacman.movement_keydown(event)
+            #elif event.type == pygame.KEYUP:
+             #   self.pacman.movement_keyup(event)
 
     def __fill_display(self, color):
         self.screen.fill(self.colors[color])
 
     def __refresh_display(self):
         #self.sprite_sheet.render_sprite(self.sprite_dictionary["Pacman_Closed.png"], (50, 50), True, 32)
-        self.Pacman_test.render_character()
+        self.pacman.render_character()
+        self.maze.render_maze()
+        self.pacman.check_collision(self.maze.wall_coords)
         pygame.display.update()
-        self.clock.tick(3)
+        self.clock.tick(60)
+
+    def update_movement(self):
+        self.pacman.update_movement()
 
     def run_game(self):
 
@@ -57,6 +66,7 @@ class Game:
 
         while self.is_running:
             self.__check_events()
+            self.update_movement()
             self.__fill_display("Blue")
             menu.display_menu()
             self.__refresh_display()
