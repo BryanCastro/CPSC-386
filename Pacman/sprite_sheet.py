@@ -97,7 +97,7 @@ class Sprite_Sheet:
 ########END-Used to clean up xml file-END###########
 
 
-    def render_sprite(self, sprite_crop, sprite_position, transform_sprite=False, transform_size=0):
+    def render_sprite(self, sprite_crop, sprite_position, transform_sprite=False, scale_size_x = 0, scale_size_y = 0):
         if transform_sprite:
             #transform_divsor = sprite_crop.w / transform_size
             #new_crop = pygame.Rect(0,0,0,0)
@@ -108,7 +108,7 @@ class Sprite_Sheet:
 
             #screen.blit(pygame.transform.scale(self.sheet, (transform_size, transform_size)), (0, 0, 0, 0), new_crop)
             subsurface_test = self.sheet.subsurface(sprite_crop)
-            scaled_sprite = pygame.transform.scale(subsurface_test, (transform_size, transform_size))
+            scaled_sprite = pygame.transform.scale(subsurface_test, (scale_size_x, scale_size_y))
 
             self.screen.blit(scaled_sprite, sprite_position)
         else:

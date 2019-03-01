@@ -30,7 +30,7 @@ class Game:
         self.sprite_sheet = Sprite_Sheet("images/Prototype.png", "text files/Prototype.xml", self.screen)
         self.sprite_dictionary = self.sprite_sheet.dataDict
         self.maze = Maze(self.screen, self.sprite_sheet, "text files/pacmanportalmaze.txt")
-        self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size)
+        self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x, self.maze.scale_size_y)
 
         #Dubugging and Logs
         #self.sprite_sheet.print_dic_log()

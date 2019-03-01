@@ -19,7 +19,6 @@ class Maze():
         self.half_reserved_height = 0
         self.calculate_pixel_diff() #function
 
-
         #####Save wall coords for collision
         self.store_coords = True
         self.wall_coords = []
@@ -29,21 +28,29 @@ class Maze():
         self.start_y = 0
         self.x_increase = 0
         self.y_increase = 0
-        self.scale_size = 0
+        self.scale_size_x = 0
+        self.scale_size_y = 0
         self.calculate_scale() #function
 
     def calculate_pixel_diff(self):
-        self.reserved_width = math.ceil(self.screen_area.w * .074)
-        self.reserved_height = math.ceil(self.screen_area.h * .074)
+        #HERE
+        #self.reserved_width = math.ceil(self.screen_area.w * .074)
+        #self.reserved_height = math.ceil(self.screen_area.h * .074)
+        self.reserved_width = self.screen_area.w * .074
+        self.reserved_height = self.screen_area.h * .074
         self.half_reserved_width = self.reserved_width / 2
         self.half_reserved_height = self.reserved_height / 2
 
     def calculate_scale(self):
         self.start_x = self.half_reserved_width
         self.start_y = self.half_reserved_height
+        #HERE
+        #self.x_increase = int((self.screen_area.w - self.reserved_width) / self.max_chars_line)
+        #self.y_increase = int((self.screen_area.h - self.reserved_height) / self.max_lines)
         self.x_increase = int((self.screen_area.w - self.reserved_width) / self.max_chars_line)
         self.y_increase = int((self.screen_area.h - self.reserved_height) / self.max_lines)
-        self.scale_size = self.x_increase
+        self.scale_size_x = self.x_increase
+        self.scale_size_y = self.y_increase
 
     def load_maze(self):
 
@@ -69,16 +76,23 @@ class Maze():
 
             for char in line:
                 sprite_name = ""
+                self.scale_size_x = self.x_increase
+                self.scale_size_y = self.y_increase
                 if char == "X":
                    sprite_name = "Bord_Solid.png"
                    if self.store_coords:
                     self.wall_coords.append(pygame.Rect(self.start_x, self.start_y,
                                                         self.x_increase, self.y_increase))
+                elif char == ".":
+                    sprite_name = "Pellet.png"
+                    self.scale_size_x = int(self.scale_size_x / 4)
+                    self.scale_size_y = int(self.scale_size_y /4)
                 else:
                     sprite_name = "Ghost_Eyes_Down.png"
 
+
                 self.sprite_sheet.render_sprite(self.sprite_sheet.dataDict[sprite_name],
-                                                   (self.start_x, self.start_y), True, self.scale_size)
+                                                   (self.start_x, self.start_y), True, self.scale_size_x, self.scale_size_y)
 
                 self.start_x = self.start_x + self.x_increase
 

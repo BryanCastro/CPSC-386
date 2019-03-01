@@ -2,30 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="759f747d-1b71-49f2-9e2b-22dc1a02bd8e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/maze.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/Base_Pngs/Others/Pellet.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/character.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_00.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_01.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_03.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_04.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_05.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_06.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_07.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_08.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_09.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Base_Pngs/Level_Border/Border_12.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/Prototype.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/Prototype.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maze.py" beforeDir="false" afterPath="$PROJECT_DIR$/maze.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/revised.txt" beforeDir="false" afterPath="$PROJECT_DIR$/revised.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text files/Packman_ss.tps" beforeDir="false" afterPath="$PROJECT_DIR$/text files/Packman_ss.tps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprite_sheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/sprite_sheet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/text files/Prototype.xml" beforeDir="false" afterPath="$PROJECT_DIR$/text files/Prototype.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text files/test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/text files/pacmanportalmaze.txt" beforeDir="false" afterPath="$PROJECT_DIR$/text files/pacmanportalmaze.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="45" column="14" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
+            <state relative-caret-position="118">
+              <caret line="44" column="13" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -50,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/text files/Prototype.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="64" lean-forward="true" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
+            <state relative-caret-position="317">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -59,12 +46,38 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/maze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-438">
-              <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
-              <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+            <state relative-caret-position="143">
+              <caret line="88" column="60" selection-start-line="88" selection-start-column="60" selection-end-line="88" selection-end-column="60" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/text files/pacmanportalmaze.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="417">
+              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/text files/Pacman.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/text files/pacmanportalmaze-backup.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-line="51" />
             </state>
           </provider>
         </entry>
@@ -75,15 +88,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/images/Prototype.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/revised.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="67" lean-forward="true" selection-start-column="67" selection-end-column="67" />
+              <caret column="67" selection-start-column="67" selection-end-column="67" />
             </state>
           </provider>
         </entry>
@@ -91,17 +99,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sprite_sheet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="59" column="13" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="13" />
+            <state relative-caret-position="344">
+              <caret line="110" column="81" selection-start-line="110" selection-start-column="81" selection-end-line="110" selection-end-column="81" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/character.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="39" column="66" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
+            <state relative-caret-position="103">
+              <caret line="16" column="44" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -125,6 +133,14 @@
       <find>col</find>
       <find>max_char</find>
       <find>pacman</find>
+      <find>char_d</find>
+      <find>math</find>
+      <find>scale_si</find>
+      <find>scale_size</find>
+      <find>scale</find>
+      <find>scale_size_</find>
+      <find>int(</find>
+      <find>scale_size.</find>
       <find>print</find>
     </findStrings>
   </component>
@@ -141,23 +157,22 @@
         <option value="$PROJECT_DIR$/main_menu.py" />
         <option value="$PROJECT_DIR$/rectangle.py" />
         <option value="$PROJECT_DIR$/revised.txt" />
-        <option value="$PROJECT_DIR$/sprite_sheet.py" />
         <option value="$PROJECT_DIR$/../../Testing/readfile.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/text files/Border_test.xml" />
         <option value="$PROJECT_DIR$/text files/Prototype.xml" />
-        <option value="$PROJECT_DIR$/text files/pacmanportalmaze.txt" />
         <option value="$PROJECT_DIR$/maze.py" />
-        <option value="$PROJECT_DIR$/character.py" />
+        <option value="$PROJECT_DIR$/sprite_sheet.py" />
         <option value="$PROJECT_DIR$/game.py" />
+        <option value="$PROJECT_DIR$/text files/pacmanportalmaze.txt" />
+        <option value="$PROJECT_DIR$/character.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="92" />
-    <option name="y" value="12" />
-    <option name="width" value="978" />
-    <option name="height" value="1039" />
+    <option name="x" value="-8" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -233,8 +248,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21083939" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21083939" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -245,7 +261,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.31444758" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.31444758" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -338,16 +354,6 @@
     <entry file="file://$PROJECT_DIR$/images/Base_Pngs/Level_Border/Bord_Sing_Semi_Bt_Lt.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/text files/Pacman.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/pacman_sprite_sheet.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/text files/Border_test.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -357,27 +363,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/images/Prototype.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/revised.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="67" lean-forward="true" selection-start-column="67" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/text files/pacmanportalmaze.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="10" column="46" lean-forward="true" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sprite_sheet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="59" column="13" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="13" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/maze (1).py">
       <provider selected="true" editor-type-id="text-editor">
@@ -389,38 +374,75 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/text files/Prototype.xml">
+    <entry file="file://$PROJECT_DIR$/images/pacman_sprite_sheet.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sprite_sheet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="64" lean-forward="true" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
+        <state relative-caret-position="344">
+          <caret line="110" column="81" selection-start-line="110" selection-start-column="81" selection-end-line="110" selection-end-column="81" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/character.py">
+    <entry file="file://$PROJECT_DIR$/revised.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="39" column="66" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
+        <state>
+          <caret column="67" selection-start-column="67" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text files/Prototype.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/maze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-438">
-          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
-          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+        <state relative-caret-position="143">
+          <caret line="88" column="60" selection-start-line="88" selection-start-column="60" selection-end-line="88" selection-end-column="60" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/text files/pacmanportalmaze-backup.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text files/pacmanportalmaze.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text files/Pacman.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="45" column="14" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
+        <state relative-caret-position="118">
+          <caret line="44" column="13" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="16" column="44" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
         </state>
       </provider>
     </entry>
