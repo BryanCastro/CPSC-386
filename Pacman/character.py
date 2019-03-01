@@ -43,8 +43,8 @@ class Character():
 
 class Pacman(Character):
 
-    def __init__(self, screen, sprite_sheet, scale_size_x, scale_size_y):
-        super(Pacman, self).__init__(screen, sprite_sheet, (100, 50, 32, 32), scale_size_x, scale_size_y)
+    def __init__(self, screen, sprite_sheet, scale_size_x, scale_size_y, start_x, start_y):
+        super(Pacman, self).__init__(screen, sprite_sheet, (start_x, start_y, 32, 32), scale_size_x, scale_size_y)
         self.animation_keys= ["Pacman_Closed.png", "Pacman_Semi_Open.png", "Pacman_Full_Open.png",
                               "Pacman_Semi_Open.png", "Pacman_Closed.png"]
         self.load_animation_sprites(self.animation_keys)
@@ -91,7 +91,7 @@ class Pacman(Character):
     def check_collision(self, wall_coords):
 
         for wall in wall_coords:
-            testvar = 5
+            testvar = 10
 
             if self.rect.colliderect(wall):
                 if self.rect.x >= wall.x and self.move_left:
@@ -108,8 +108,8 @@ class Pacman(Character):
                     self.restart_movement()
                 #print("Collision at: "+ str(wall))
 
-    def restart_movement(self):
-        self.move_left = False
-        self.move_right = False
-        self.move_up = False
-        self.move_down = False
+    def restart_movement(self, move_left = False, move_right = False, move_up = False, move_down = False):
+        self.move_left = move_left
+        self.move_right = move_right
+        self.move_up = move_up
+        self.move_down = move_down

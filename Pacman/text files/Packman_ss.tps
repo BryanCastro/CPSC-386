@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>xml</string>
         <key>textureFileName</key>
-        <filename>../images/Prototype.png</filename>
+        <filename>../images/Pacman.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>Prototype.xml</filename>
+                <filename>Pacman.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,6 +181,29 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../images/Base_Pngs/Borders/Border_00.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_01.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_02.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_03.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_04.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_05.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_06.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_07.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_08.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_09.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_10.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Down.png</key>
             <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Left.png</key>
             <key type="filename">../images/Base_Pngs/Ghost_Pngs/Blue_Ghost_Right.png</key>
@@ -223,37 +246,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Dn_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Up_Dn_Lt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Up_Dn_Rt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Curv_Up_Rt_Dn.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Doub_Str_Dn.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Doub_Str_Lt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Doub_Str_Rt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Doub_Str_Tp_Bt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Doub_Str_Up.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Sing_Semi_Bt_Lt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Sing_Semi_Bt_Rt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Sing_Semi_Tp_Lt.png</key>
-            <key type="filename">../images/Base_Pngs/Level_Border/Bord_Sing_Semi_Tp_Rt.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
         </map>
         <key>fileList</key>
         <array>
             <filename>../images/Base_Pngs/Ghost_Pngs</filename>
             <filename>../images/Base_Pngs/Pacman_Pngs</filename>
-            <filename>../images/Base_Pngs/Level_Border</filename>
+            <filename>../images/Base_Pngs/Borders</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

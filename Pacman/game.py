@@ -27,10 +27,11 @@ class Game:
                  "White": (255, 255, 255)}
 
         #Create Objects Here
-        self.sprite_sheet = Sprite_Sheet("images/Prototype.png", "text files/Prototype.xml", self.screen)
+        self.sprite_sheet = Sprite_Sheet("images/Pacman.png", "text files/Pacman.xml", self.screen)
         self.sprite_dictionary = self.sprite_sheet.dataDict
         self.maze = Maze(self.screen, self.sprite_sheet, "text files/pacmanportalmaze.txt")
-        self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x, self.maze.scale_size_y)
+        self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x, self.maze.scale_size_y,
+                             self.maze.pacman_start_x, self.maze.pacman_start_y)
 
         #Dubugging and Logs
         #self.sprite_sheet.print_dic_log()
@@ -50,14 +51,21 @@ class Game:
 
     def __refresh_display(self):
         #self.sprite_sheet.render_sprite(self.sprite_dictionary["Pacman_Closed.png"], (50, 50), True, 32)
-        self.pacman.render_character()
         self.maze.render_maze()
+        if self.maze.calc_pac_pos:
+            self.set_pacman_position()
+            self.maze.calc_pac_pos = False
+        self.pacman.render_character()
         self.pacman.check_collision(self.maze.wall_coords)
         pygame.display.update()
         self.clock.tick(60)
 
     def update_movement(self):
         self.pacman.update_movement()
+
+    def set_pacman_position(self):
+        self.pacman.rect.x = self.maze.pacman_start_x
+        self.pacman.rect.y = self.maze.pacman_start_y
 
     def run_game(self):
 
@@ -67,6 +75,6 @@ class Game:
         while self.is_running:
             self.__check_events()
             self.update_movement()
-            self.__fill_display("Blue")
-            menu.display_menu()
+            self.__fill_display("Black")
+            #menu.display_menu()
             self.__refresh_display()

@@ -18,6 +18,7 @@ class Maze():
         self.half_reserved_width = 0
         self.half_reserved_height = 0
         self.calculate_pixel_diff() #function
+        self.calc_pac_pos = True
 
         #####Save wall coords for collision
         self.store_coords = True
@@ -31,6 +32,10 @@ class Maze():
         self.scale_size_x = 0
         self.scale_size_y = 0
         self.calculate_scale() #function
+
+        #pacman info
+        self.pacman_start_x = 0
+        self.pacman_start_y = 0
 
     def calculate_pixel_diff(self):
         #HERE
@@ -76,17 +81,60 @@ class Maze():
 
             for char in line:
                 sprite_name = ""
-                self.scale_size_x = self.x_increase
-                self.scale_size_y = self.y_increase
-                if char == "X":
-                   sprite_name = "Bord_Solid.png"
+                self.scale_size_x = int(self.x_increase)
+                self.scale_size_y = int(self.y_increase)
+
+                if char == ".":
+                    sprite_name = "Blank.png"
+                elif char == "X":
+                   sprite_name = "Border_Par_Up_Dn.png"
                    if self.store_coords:
-                    self.wall_coords.append(pygame.Rect(self.start_x, self.start_y,
-                                                        self.x_increase, self.y_increase))
-                elif char == ".":
+                       self.save_coords()
+                elif char == "(":
+                    sprite_name = "Border_Curve_Tp_Lt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == ")":
+                    sprite_name = "Border_Curve_Tp_Rt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "|":
+                    sprite_name = "Border_Par_Lt_Rt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "[":
+                    sprite_name = "Border_Curve_Bt_Lt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "]":
+                    sprite_name = "Border_Curve_Bt_Rt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "1":
+                    sprite_name = "Border_St_Lt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "-":
+                    sprite_name = "Border_St_Up.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "_":
+                    sprite_name = "Border_St_Bt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "}":
+                    sprite_name = "Border_St_Rt.png"
+                    if self.store_coords:
+                        self.save_coords()
+                elif char == "S":
+                    sprite_name = "Red_Ghost_Down.png"
+                    if self.calc_pac_pos:
+                        self.pacman_start_x = self.start_x
+                        self.pacman_start_y = self.start_y
+                elif char == "O":
                     sprite_name = "Pellet.png"
                     self.scale_size_x = int(self.scale_size_x / 4)
-                    self.scale_size_y = int(self.scale_size_y /4)
+                    self.scale_size_y = int(self.scale_size_y / 4)
                 else:
                     sprite_name = "Ghost_Eyes_Down.png"
 
@@ -100,3 +148,7 @@ class Maze():
             self.start_x = self.half_reserved_width
 
         self.store_coords = False
+
+    def save_coords(self):
+        self.wall_coords.append(pygame.Rect(self.start_x, self.start_y,
+                                            self.x_increase, self.y_increase))

@@ -1,0 +1,86 @@
+#Block 1
+(XXXXX)
+|XXXXX|
+[XXXXX]
+
+#Block 2
+(XXX)
+|XXX|
+[XXX]
+
+#Left St Line
+[XXXXXXX)
+
+#Right St Line
+(XXXXXXX]
+
+#Large Left Wall
+(
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+[
+
+#Small Left Wall
+(
+|
+|
+|
+|
+|
+[
+
+#Large Right Wall
+)
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+]
+
+#Small Right Wall
+)
+|
+|
+|
+|
+|
+]
+
+#Double Sided Wall
+||
+||
+||
+||
+||
+[]
+
+#lil straight left
+1-X)
+1_X]
+
+
+#lil striaght right
+(-X}
+[_X}
