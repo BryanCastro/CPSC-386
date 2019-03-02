@@ -18,8 +18,6 @@ class Character():
         self.scale_sprite() #function
 
     def render_character(self):
-        print(self.rect)
-        print(self.scale_size_x)
         self.sprite_sheet.render_sprite(self.animation_sprites[self.animation_index], self.rect, True, self.scale_size_x, self.scale_size_y)
         self.animation_index += 1
 
@@ -88,7 +86,7 @@ class Pacman(Character):
         elif self.move_down:
             self.rect.y += self.speed
 
-    def check_collision(self, wall_coords):
+    def check_wall_collision(self, wall_coords):
 
         for wall in wall_coords:
             testvar = 10
@@ -106,7 +104,16 @@ class Pacman(Character):
                 if self.rect.y <= wall.y and self.move_down:
                     self.rect.y -= testvar
                     self.restart_movement()
-                #print("Collision at: "+ str(wall))
+
+    def check_pellet_collision(self, pellet_coords):
+        new_list = []
+        for pellet in pellet_coords:
+            if self.rect.colliderect(pellet):
+                new_list.append(pellet)
+                pellet_coords.remove(pellet)
+
+        return new_list
+
 
     def restart_movement(self, move_left = False, move_right = False, move_up = False, move_down = False):
         self.move_left = move_left

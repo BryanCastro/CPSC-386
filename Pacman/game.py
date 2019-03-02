@@ -29,12 +29,15 @@ class Game:
         #Create Objects Here
         self.sprite_sheet = Sprite_Sheet("images/Pacman.png", "text files/Pacman.xml", self.screen)
         self.sprite_dictionary = self.sprite_sheet.dataDict
-        self.maze = Maze(self.screen, self.sprite_sheet, "text files/pacmanportalmaze.txt")
+        self.maze = Maze(self.screen, self.sprite_sheet, "text files/New_Level.txt")
         self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x, self.maze.scale_size_y,
                              self.maze.pacman_start_x, self.maze.pacman_start_y)
 
         #Dubugging and Logs
         #self.sprite_sheet.print_dic_log()
+
+        #Others
+        self.pellet_collided = []
 
     def __check_events(self):
         for event in pygame.event.get():
@@ -50,13 +53,16 @@ class Game:
         self.screen.fill(self.colors[color])
 
     def __refresh_display(self):
-        #self.sprite_sheet.render_sprite(self.sprite_dictionary["Pacman_Closed.png"], (50, 50), True, 32)
-        self.maze.render_maze()
+        #print(self.pellet_coords)
+
+        self.maze.render_maze(self.pellet_collided)
         if self.maze.calc_pac_pos:
             self.set_pacman_position()
             self.maze.calc_pac_pos = False
+        self.pacman.check_wall_collision(self.maze.wall_coords)
+        self.pellet_collided = self.pacman.check_pellet_collision(self.maze.pellet_coords)
         self.pacman.render_character()
-        self.pacman.check_collision(self.maze.wall_coords)
+
         pygame.display.update()
         self.clock.tick(60)
 

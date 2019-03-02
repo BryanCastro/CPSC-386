@@ -24,6 +24,10 @@ class Maze():
         self.store_coords = True
         self.wall_coords = []
 
+        #####Save Pellets
+        self.pellet_coords = []
+        self.pellets_left = 0
+
         #####calculate scale
         self.start_x = 0
         self.start_y = 0
@@ -73,7 +77,7 @@ class Maze():
 
         return level_lines
 
-    def render_maze(self):
+    def render_maze(self, pellet_collided):
         self.start_y = self.half_reserved_height
         self.start_x = self.half_reserved_width
 
@@ -89,54 +93,71 @@ class Maze():
                 elif char == "X":
                    sprite_name = "Border_Par_Up_Dn.png"
                    if self.store_coords:
-                       self.save_coords()
+                       self.save_coords(self.wall_coords)
                 elif char == "(":
                     sprite_name = "Border_Curve_Tp_Lt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == ")":
                     sprite_name = "Border_Curve_Tp_Rt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "|":
                     sprite_name = "Border_Par_Lt_Rt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "[":
                     sprite_name = "Border_Curve_Bt_Lt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "]":
                     sprite_name = "Border_Curve_Bt_Rt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "1":
                     sprite_name = "Border_St_Lt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "-":
                     sprite_name = "Border_St_Up.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "_":
                     sprite_name = "Border_St_Bt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "}":
                     sprite_name = "Border_St_Rt.png"
                     if self.store_coords:
-                        self.save_coords()
+                        self.save_coords(self.wall_coords)
                 elif char == "S":
-                    sprite_name = "Red_Ghost_Down.png"
+                    sprite_name = "Blank.png"
                     if self.calc_pac_pos:
                         self.pacman_start_x = self.start_x
                         self.pacman_start_y = self.start_y
                 elif char == "O":
-                    sprite_name = "Pellet.png"
-                    self.scale_size_x = int(self.scale_size_x / 4)
-                    self.scale_size_y = int(self.scale_size_y / 4)
+                    #sprite_name = "Pellet.png"
+                    if self.store_coords:
+                        sprite_name = "Pellet.png"
+                        self.save_coords(self.pellet_coords)
+                        self.pellets_left += 1
+                    else:
+                        for pellet in pellet_collided:
+                            if int(self.start_x) == int(pellet.x) and int(self.start_y) == int(pellet.y):
+                                sprite_name = "Pellet.png"
+                                break
+                            else:
+                                sprite_name = "Blank.png"
+
+                        if len(pellet_collided) <= 0:
+                            sprite_name = "Blank.png"
+
+
+
+
+
                 else:
-                    sprite_name = "Ghost_Eyes_Down.png"
+                    sprite_name = "Blank.png"
 
 
                 self.sprite_sheet.render_sprite(self.sprite_sheet.dataDict[sprite_name],
@@ -149,6 +170,6 @@ class Maze():
 
         self.store_coords = False
 
-    def save_coords(self):
-        self.wall_coords.append(pygame.Rect(self.start_x, self.start_y,
+    def save_coords(self, coord_obj):
+        coord_obj.append(pygame.Rect(self.start_x, self.start_y,
                                             self.x_increase, self.y_increase))

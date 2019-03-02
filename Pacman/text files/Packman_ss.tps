@@ -102,7 +102,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Grid</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -163,13 +163,13 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>5</uint>
+            <uint>0</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -181,17 +181,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../images/Base_Pngs/Borders/Border_00.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_01.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_02.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_03.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_04.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_05.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_06.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_07.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_08.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_09.png</key>
-            <key type="filename">../images/Base_Pngs/Borders/Border_10.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Curve_Bt_Lt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Curve_Bt_Rt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Curve_Tp_Lt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Curve_Tp_Rt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Par_Lt_Rt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Par_Up_Dn.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_Solid.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_St_Bt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_St_Lt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_St_Rt.png</key>
+            <key type="filename">../images/Base_Pngs/Borders/Border_St_Up.png</key>
+            <key type="filename">../images/Base_Pngs/Others/Blank.png</key>
+            <key type="filename">../images/Base_Pngs/Others/Pellet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -252,6 +254,7 @@
             <filename>../images/Base_Pngs/Ghost_Pngs</filename>
             <filename>../images/Base_Pngs/Pacman_Pngs</filename>
             <filename>../images/Base_Pngs/Borders</filename>
+            <filename>../images/Base_Pngs/Others</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
