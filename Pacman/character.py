@@ -16,8 +16,8 @@ class Character():
         self.speed = 0
 
         #scale
-        self.scale_size_x = scale_size_x * 3
-        self.scale_size_y = scale_size_y * 3
+        self.scale_size_x = scale_size_x #* 3
+        self.scale_size_y = scale_size_y #* 3
         self.scale_sprite() #function
 
         #Transformation
@@ -103,6 +103,8 @@ class Pacman(Character):
             if event.key == pygame.K_DOWN:
                 self.restart_movement(move_down=True)
                 self.restart_transormation(rotation_down=True)
+            if event.key == pygame.K_s:
+                self.speed *= 2
         if event.key == pygame.K_q:
             pygame.quit()
 
@@ -128,7 +130,8 @@ class Pacman(Character):
             self.rect.y += self.speed
 
     def check_collision(self, maze, allow_movement):
-        testvar = self.rect.w/2
+        testvar = self.rect.w*2
+
         for block in maze.level_blocks:
             allow_movement = False
             if self.rect.colliderect(block):
@@ -151,9 +154,9 @@ class Pacman(Character):
                     maze.pellets_left -= 1
                     maze.points += 10
                 if block.tag == "intersection_up_down":
-
                     allow_movement = True
                     return allow_movement
+
 
 
 

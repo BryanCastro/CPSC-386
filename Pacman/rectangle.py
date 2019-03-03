@@ -3,6 +3,7 @@ import pygame
 class Rectangle:
 
     def __init__(self, screen, rect_pos_size, color = "Black"):
+        self.screen = screen
         self.rect = rect_pos_size
         self.rect_color = color
         self.tag = ""

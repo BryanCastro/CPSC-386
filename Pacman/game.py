@@ -54,6 +54,8 @@ class Game:
 
         #Others
         self.allow_movement = False
+        self.main_menu = True
+        self.pacman_game = False
 
 
     def __check_events(self, allow_movement):
@@ -69,12 +71,17 @@ class Game:
     def __fill_display(self, color):
         self.screen.fill(self.colors[color])
 
-    def __refresh_display(self):
+    def __game_display(self):
+        self.update_movement()
+        self.score_text.recalculate_text(self.maze.points)
         self.maze.render_maze()
         self.pacman.render_character()
         self.render_lives()
-        #Here
+        # Here
         self.allow_movement = self.pacman.check_collision(self.maze, self.allow_movement)
+
+    def __refresh_display(self):
+
         pygame.display.update()
         self.clock.tick(settings.FPS)
 
@@ -92,10 +99,13 @@ class Game:
 
         while self.is_running:
             self.__check_events(self.allow_movement)
-            self.update_movement()
+
             self.__fill_display("Black")
-            self.score_text.recalculate_text(self.maze.points)
-            #menu.display_menu()
+            if self.main_menu:
+                menu.display_menu()
+            elif self.pacman_game:
+                self.__game_display()
+
             self.__refresh_display()
 
     def load_pacman_lives(self):

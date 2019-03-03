@@ -9,8 +9,7 @@ class Main_Menu:
         self.screen_area = screen.get_rect()
         self.colors = colors
         self.text = Text(self.screen, "Wuddup", colors["Red"], colors["Green"], 50, 50)
-        self.background_Rect = Rectangle(screen, colors["Black"], pygame.Rect(self.screen_area.w / 2, 0,
-                                         self.screen_area.w /2 , self.screen_area.h))
+        self.background_Rect = Rectangle(screen, (0,0, 500, 500), self.colors["Blue"])
 
     def display_menu(self):
         self.background_Rect.blit_rect()
