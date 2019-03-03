@@ -1,4 +1,5 @@
 import pygame
+import settings
 
 class Character():
 
@@ -13,14 +14,30 @@ class Character():
         self.animation_index = 0
         self.death_index = 0
         self.speed = 0
-        self.scale_size_x = scale_size_x * 2
-        self.scale_size_y = scale_size_y * 2
+
+        #scale
+        self.scale_size_x = scale_size_x * 3
+        self.scale_size_y = scale_size_y * 3
         self.scale_sprite() #function
 
-    def render_character(self):
-        self.sprite_sheet.render_sprite(self.animation_sprites[self.animation_index], self.rect, True, self.scale_size_x, self.scale_size_y)
-        self.animation_index += 1
+        #Transformation
+        self.flipped_x = False
+        self.flipped_y = False
+        self.rotation_up = False
+        self.rotation_down = False
 
+        #For Clock
+        self.character_spawn_time = 0
+
+    def render_character(self):
+        self.character_spawn_time += 1
+
+        self.sprite_sheet.render_sprite(self.animation_sprites[self.animation_index], self.rect, True,
+                                        self.scale_size_x, self.scale_size_y,
+                                        self.flipped_x, self.flipped_y, self.rotation_up, self.rotation_down)
+
+        if  self.character_spawn_time % (settings.FPS/self.animation_frames) == 0:
+            self.animation_index += 1
 
         if self.animation_index >= self.animation_frames:
             self.animation_index = 0
@@ -36,8 +53,15 @@ class Character():
             self.death_sprites.append(sprite)
 
     def scale_sprite(self):
-        self.rect.w = self.scale_size_x
-        self.rect.h = self.scale_size_y
+        if self.scale_size_x < self.scale_size_y:
+            self.rect.w = self.scale_size_x
+            self.rect.h = self.scale_size_x
+        else:
+            self.rect.w = self.scale_size_y
+            self.rect.h = self.scale_size_y
+
+        #self.rect.w = self.scale_size_x
+        #self.rect.h = self.scale_size_y
 
 class Pacman(Character):
 
@@ -52,16 +76,33 @@ class Pacman(Character):
         self.move_down = False
         self.speed = 5
 
-    def movement_keydown(self, event):
+    #def movement_keydown(self, event):
+#
+    #    if event.key == pygame.K_RIGHT:
+    #        self.move_right = True
+    #    if event.key == pygame.K_LEFT:
+    #        self.move_left = True
+    #    if event.key == pygame.K_UP:
+    #        self.move_up = True
+    #    if event.key == pygame.K_DOWN:
+    #        self.move_down = True
+    #    if event.key == pygame.K_q:
+    #        pygame.quit()
 
-        if event.key == pygame.K_RIGHT:
-            self.move_right = True
-        if event.key == pygame.K_LEFT:
-            self.move_left = True
-        if event.key == pygame.K_UP:
-            self.move_up = True
-        if event.key == pygame.K_DOWN:
-            self.move_down = True
+    def movement_keydown(self, event, allow_movement):
+        if allow_movement:
+            if event.key == pygame.K_RIGHT:
+                self.restart_movement(move_right=True)
+                self.restart_transormation(flipped_x=False)
+            if event.key == pygame.K_LEFT:
+                self.restart_movement(move_left=True)
+                self.restart_transormation(flipped_x=True)
+            if event.key == pygame.K_UP:
+                self.restart_movement(move_up=True)
+                self.restart_transormation(rotation_up=True)
+            if event.key == pygame.K_DOWN:
+                self.restart_movement(move_down=True)
+                self.restart_transormation(rotation_down=True)
         if event.key == pygame.K_q:
             pygame.quit()
 
@@ -86,33 +127,36 @@ class Pacman(Character):
         elif self.move_down:
             self.rect.y += self.speed
 
-    def check_wall_collision(self, wall_coords):
+    def check_collision(self, maze, allow_movement):
+        testvar = self.rect.w/2
+        for block in maze.level_blocks:
+            allow_movement = False
+            if self.rect.colliderect(block):
+                if block.tag == "wall":
+                    if self.rect.x >= block.rect.x and self.move_left:
+                        self.rect.x += testvar
+                        self.restart_movement()
+                    if self.rect.x <= block.rect.x and self.move_right:
+                        self.rect.x -= testvar
+                        self.restart_movement()
+                    if self.rect.y >= block.rect.y and self.move_up:
+                        self.rect.y += testvar
+                        self.restart_movement()
+                    if self.rect.y <= block.rect.y and self.move_down:
+                        self.rect.y -= testvar
+                        self.restart_movement()
+                if block.tag == "pellet":
+                    block.sprite_name = "Blank.png"
+                    block.tag = "no collision"
+                    maze.pellets_left -= 1
+                    maze.points += 10
+                if block.tag == "intersection_up_down":
 
-        for wall in wall_coords:
-            testvar = 10
+                    allow_movement = True
+                    return allow_movement
 
-            if self.rect.colliderect(wall):
-                if self.rect.x >= wall.x and self.move_left:
-                    self.rect.x += testvar
-                    self.restart_movement()
-                if self.rect.x <= wall.x and self.move_right:
-                    self.rect.x -= testvar
-                    self.restart_movement()
-                if self.rect.y >= wall.y and self.move_up:
-                    self.rect.y += testvar
-                    self.restart_movement()
-                if self.rect.y <= wall.y and self.move_down:
-                    self.rect.y -= testvar
-                    self.restart_movement()
 
-    def check_pellet_collision(self, pellet_coords):
-        new_list = []
-        for pellet in pellet_coords:
-            if self.rect.colliderect(pellet):
-                new_list.append(pellet)
-                pellet_coords.remove(pellet)
 
-        return new_list
 
 
     def restart_movement(self, move_left = False, move_right = False, move_up = False, move_down = False):
@@ -120,3 +164,9 @@ class Pacman(Character):
         self.move_right = move_right
         self.move_up = move_up
         self.move_down = move_down
+
+    def restart_transormation(self, flipped_x = False, flipped_y = False, rotation_up = False, rotation_down = False):
+        self.flipped_x = flipped_x
+        self.flipped_y = flipped_y
+        self.rotation_up = rotation_up
+        self.rotation_down = rotation_down

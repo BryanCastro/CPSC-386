@@ -1,5 +1,6 @@
 import pygame
 import math
+from rectangle import Rectangle
 
 
 class Maze():
@@ -18,15 +19,6 @@ class Maze():
         self.half_reserved_width = 0
         self.half_reserved_height = 0
         self.calculate_pixel_diff() #function
-        self.calc_pac_pos = True
-
-        #####Save wall coords for collision
-        self.store_coords = True
-        self.wall_coords = []
-
-        #####Save Pellets
-        self.pellet_coords = []
-        self.pellets_left = 0
 
         #####calculate scale
         self.start_x = 0
@@ -41,10 +33,14 @@ class Maze():
         self.pacman_start_x = 0
         self.pacman_start_y = 0
 
+        #others
+        self.pellets_left = 0
+        self.points = 0
+        self.level_blocks = []
+        self.load_maze_2() #function
+
+
     def calculate_pixel_diff(self):
-        #HERE
-        #self.reserved_width = math.ceil(self.screen_area.w * .074)
-        #self.reserved_height = math.ceil(self.screen_area.h * .074)
         self.reserved_width = self.screen_area.w * .074
         self.reserved_height = self.screen_area.h * .074
         self.half_reserved_width = self.reserved_width / 2
@@ -53,9 +49,6 @@ class Maze():
     def calculate_scale(self):
         self.start_x = self.half_reserved_width
         self.start_y = self.half_reserved_height
-        #HERE
-        #self.x_increase = int((self.screen_area.w - self.reserved_width) / self.max_chars_line)
-        #self.y_increase = int((self.screen_area.h - self.reserved_height) / self.max_lines)
         self.x_increase = int((self.screen_area.w - self.reserved_width) / self.max_chars_line)
         self.y_increase = int((self.screen_area.h - self.reserved_height) / self.max_lines)
         self.scale_size_x = self.x_increase
@@ -77,98 +70,74 @@ class Maze():
 
         return level_lines
 
-    def render_maze(self, pellet_collided):
+    def load_maze_2(self):
         self.start_y = self.half_reserved_height
         self.start_x = self.half_reserved_width
 
         for line in self.level_lines:
 
             for char in line:
-                sprite_name = ""
+                new_rectangle = Rectangle(self.screen, (0, 0, 0, 0))
+                new_rectangle.tag = "wall"
                 self.scale_size_x = int(self.x_increase)
                 self.scale_size_y = int(self.y_increase)
 
                 if char == ".":
-                    sprite_name = "Blank.png"
+                    new_rectangle.sprite_name= "Blank.png"
+                    new_rectangle.tag = "no collision"
                 elif char == "X":
-                   sprite_name = "Border_Par_Up_Dn.png"
-                   if self.store_coords:
-                       self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_Par_Up_Dn.png"
                 elif char == "(":
-                    sprite_name = "Border_Curve_Tp_Lt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_Curve_Tp_Lt.png"
                 elif char == ")":
-                    sprite_name = "Border_Curve_Tp_Rt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_Curve_Tp_Rt.png"
                 elif char == "|":
-                    sprite_name = "Border_Par_Lt_Rt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_Par_Lt_Rt.png"
                 elif char == "[":
-                    sprite_name = "Border_Curve_Bt_Lt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_Curve_Bt_Lt.png"
                 elif char == "]":
-                    sprite_name = "Border_Curve_Bt_Rt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_Curve_Bt_Rt.png"
                 elif char == "1":
-                    sprite_name = "Border_St_Lt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_St_Lt.png"
                 elif char == "-":
-                    sprite_name = "Border_St_Up.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_St_Up.png"
                 elif char == "_":
-                    sprite_name = "Border_St_Bt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_St_Bt.png"
                 elif char == "}":
-                    sprite_name = "Border_St_Rt.png"
-                    if self.store_coords:
-                        self.save_coords(self.wall_coords)
+                    new_rectangle.sprite_name = "Border_St_Rt.png"
                 elif char == "S":
-                    sprite_name = "Blank.png"
-                    if self.calc_pac_pos:
-                        self.pacman_start_x = self.start_x
-                        self.pacman_start_y = self.start_y
+                    new_rectangle.sprite_name = "Blank.png"
+                    #new_rectangle.tag = "no collision"
+                    new_rectangle.tag = "intersection_up_down"
+                    self.pacman_start_x = self.start_x
+                    self.pacman_start_y = self.start_y
                 elif char == "O":
-                    #sprite_name = "Pellet.png"
-                    if self.store_coords:
-                        sprite_name = "Pellet.png"
-                        self.save_coords(self.pellet_coords)
-                        self.pellets_left += 1
-                    else:
-                        for pellet in pellet_collided:
-                            if int(self.start_x) == int(pellet.x) and int(self.start_y) == int(pellet.y):
-                                sprite_name = "Pellet.png"
-                                break
-                            else:
-                                sprite_name = "Blank.png"
-
-                        if len(pellet_collided) <= 0:
-                            sprite_name = "Blank.png"
-
-
-
-
-
+                    new_rectangle.sprite_name = "Pellet.png"
+                    new_rectangle.tag = "pellet"
+                    self.pellets_left += 1
+                elif char == "!":
+                    new_rectangle.sprite_name = "Blank.png"
+                    new_rectangle.tag = "intersection_up_down"
                 else:
-                    sprite_name = "Blank.png"
+                    new_rectangle.sprite_name = "Blank.png"
+                    new_rectangle.tag = "no collision"
+
+                new_rectangle.rect = pygame.Rect(int(self.start_x), int(self.start_y), self.scale_size_x, self.scale_size_y)
 
 
-                self.sprite_sheet.render_sprite(self.sprite_sheet.dataDict[sprite_name],
-                                                   (self.start_x, self.start_y), True, self.scale_size_x, self.scale_size_y)
-
+                self.level_blocks.append(new_rectangle)
                 self.start_x = self.start_x + self.x_increase
 
             self.start_y += self.y_increase
             self.start_x = self.half_reserved_width
 
-        self.store_coords = False
+    def render_maze(self):
+
+        for block in self.level_blocks:
+            self.sprite_sheet.render_sprite(self.sprite_sheet.dataDict[block.sprite_name],
+                                            (block.rect.x, block.rect.y), True,
+                                            block.rect.w, block.rect.h)
+
 
     def save_coords(self, coord_obj):
         coord_obj.append(pygame.Rect(self.start_x, self.start_y,

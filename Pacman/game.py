@@ -4,11 +4,13 @@ from main_menu import Main_Menu
 from sprite_sheet import Sprite_Sheet
 from character import Pacman
 from maze import Maze
-
+from text import Text
+import settings
 
 class Game:
 
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
+
         pygame.init()
         #Checks if game is running
         self.is_running = True
@@ -26,26 +28,41 @@ class Game:
                  "Blue": (0, 0, 255),
                  "White": (255, 255, 255)}
 
+        #Settings
+        self.pacman_lives_count = 3
+
+
         #Create Objects Here
         self.sprite_sheet = Sprite_Sheet("images/Pacman.png", "text files/Pacman.xml", self.screen)
         self.sprite_dictionary = self.sprite_sheet.dataDict
-        self.maze = Maze(self.screen, self.sprite_sheet, "text files/New_Level.txt")
+        self.maze = Maze(self.screen, self.sprite_sheet, "text files/pacmanportalmaze.txt")
         self.pacman = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x, self.maze.scale_size_y,
                              self.maze.pacman_start_x, self.maze.pacman_start_y)
+        self.score_text = Text(self.screen, "Points: ",self.colors["White"], self.colors["Black"],
+                               self.SCREEN_WIDTH/2, self.SCREEN_HEIGHT-self.maze.reserved_height)
+        self.lives_text = Text(self.screen, "Lives: ", self.colors["White"], self.colors["Black"],
+                               self.maze.half_reserved_width, self.SCREEN_HEIGHT-self.maze.reserved_height)
+
+        self.pacman_lives_stored = []
+        self.load_pacman_lives()
+
+        #Center Text Properly
+        self.score_text.textrect.x -= self.score_text.textrect.w /2
 
         #Dubugging and Logs
         #self.sprite_sheet.print_dic_log()
 
         #Others
-        self.pellet_collided = []
+        self.allow_movement = False
 
-    def __check_events(self):
+
+    def __check_events(self, allow_movement):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-               self.pacman.movement_keydown(event)
+                self.pacman.movement_keydown(event, allow_movement)
             #elif event.type == pygame.KEYUP:
              #   self.pacman.movement_keyup(event)
 
@@ -53,18 +70,13 @@ class Game:
         self.screen.fill(self.colors[color])
 
     def __refresh_display(self):
-        #print(self.pellet_coords)
-
-        self.maze.render_maze(self.pellet_collided)
-        if self.maze.calc_pac_pos:
-            self.set_pacman_position()
-            self.maze.calc_pac_pos = False
-        self.pacman.check_wall_collision(self.maze.wall_coords)
-        self.pellet_collided = self.pacman.check_pellet_collision(self.maze.pellet_coords)
+        self.maze.render_maze()
         self.pacman.render_character()
-
+        self.render_lives()
+        #Here
+        self.allow_movement = self.pacman.check_collision(self.maze, self.allow_movement)
         pygame.display.update()
-        self.clock.tick(60)
+        self.clock.tick(settings.FPS)
 
     def update_movement(self):
         self.pacman.update_movement()
@@ -79,8 +91,28 @@ class Game:
         menu = Main_Menu(self.screen, self.colors)
 
         while self.is_running:
-            self.__check_events()
+            self.__check_events(self.allow_movement)
             self.update_movement()
             self.__fill_display("Black")
+            self.score_text.recalculate_text(self.maze.points)
             #menu.display_menu()
             self.__refresh_display()
+
+    def load_pacman_lives(self):
+        x = self.lives_text.textrect.x + self.lives_text.textrect.w
+        #y = self.SCREEN_HEIGHT-self.maze.reserved_height + self.lives_text.textrect.h/4
+        y = self.lives_text.textrect.centery
+        for life in range(self.pacman_lives_count):
+            self.pacman_lives_stored.append(Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x,
+                                            self.maze.scale_size_y, x, y))
+            x += self.pacman.rect.w+self.pacman.rect.w/2
+
+        for life in self.pacman_lives_stored:
+            life.rect.y -= life.rect.h/2
+
+    def render_lives(self):
+        self.score_text.display_text()
+        self.lives_text.display_text()
+
+        for lives in self.pacman_lives_stored:
+            lives.render_character()

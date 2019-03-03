@@ -96,21 +96,27 @@ class Sprite_Sheet:
 
 ########END-Used to clean up xml file-END###########
 
-
-    def render_sprite(self, sprite_crop, sprite_position, transform_sprite=False, scale_size_x = 0, scale_size_y = 0):
+    def render_sprite(self, sprite_crop, sprite_position, transform_sprite=False, scale_size_x = 0, scale_size_y = 0,
+                      flipped_x = False, flipped_y = False, rotation_up = False, rotation_down = False):
         if transform_sprite:
-            #transform_divsor = sprite_crop.w / transform_size
-            #new_crop = pygame.Rect(0,0,0,0)
-            #new_crop.x = float(sprite_crop.x/transform_divsor)
-            #new_crop.y = float(sprite_crop.y/transform_divsor)
-            #new_crop.w = float(sprite_crop.w/transform_divsor)
-            #new_crop.h = float(sprite_crop.h/transform_divsor)
-
-            #screen.blit(pygame.transform.scale(self.sheet, (transform_size, transform_size)), (0, 0, 0, 0), new_crop)
             subsurface_test = self.sheet.subsurface(sprite_crop)
             scaled_sprite = pygame.transform.scale(subsurface_test, (scale_size_x, scale_size_y))
 
-            self.screen.blit(scaled_sprite, sprite_position)
+
+            if flipped_x:
+                flipped = pygame.transform.flip(scaled_sprite, True, False)
+                self.screen.blit(flipped, sprite_position)
+            elif flipped_y:
+                flipped = pygame.transform.flip(scaled_sprite, False, True)
+                self.screen.blit(flipped, sprite_position)
+            elif rotation_up:
+                rotation = pygame.transform.rotate(scaled_sprite, 90)
+                self.screen.blit(rotation, sprite_position)
+            elif rotation_down:
+                rotation = pygame.transform.rotate(scaled_sprite, -90)
+                self.screen.blit(rotation, sprite_position)
+            else:
+                self.screen.blit(scaled_sprite, sprite_position)
         else:
             self.screen.blit(self.sheet, sprite_position, sprite_crop)
 #
