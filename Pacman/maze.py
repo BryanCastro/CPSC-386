@@ -33,11 +33,17 @@ class Maze():
         self.pacman_start_x = 0
         self.pacman_start_y = 0
 
+        #Ghost info
+        self.blinky_start_x = 0
+        self.blinky_start_y = 0
+
         #others
         self.pellets_left = 0
+        self.store_nodes = []
         self.points = 0
         self.level_blocks = []
         self.load_maze_2() #function
+
 
 
     def calculate_pixel_diff(self):
@@ -107,17 +113,22 @@ class Maze():
                     new_rectangle.sprite_name = "Border_St_Rt.png"
                 elif char == "S":
                     new_rectangle.sprite_name = "Blank.png"
-                    #new_rectangle.tag = "no collision"
-                    new_rectangle.tag = "intersection_up_down"
+                    new_rectangle.tag = "intersection_pacman_start"
                     self.pacman_start_x = self.start_x
                     self.pacman_start_y = self.start_y
+                elif char == "B":
+                    new_rectangle.sprite_name = "Blank.png"
+                    self.blinky_start_x = self.start_x
+                    self.blinky_start_y = self.start_y
+                    new_rectangle.tag = "no collision"
                 elif char == "O":
                     new_rectangle.sprite_name = "Pellet.png"
                     new_rectangle.tag = "pellet"
                     self.pellets_left += 1
                 elif char == "!":
                     new_rectangle.sprite_name = "Blank.png"
-                    new_rectangle.tag = "intersection_up_down"
+                    new_rectangle.tag = "intersection"
+                    self.store_nodes.append(new_rectangle)
                 else:
                     new_rectangle.sprite_name = "Blank.png"
                     new_rectangle.tag = "no collision"
@@ -138,7 +149,16 @@ class Maze():
                                             (block.rect.x, block.rect.y), True,
                                             block.rect.w, block.rect.h)
 
-
     def save_coords(self, coord_obj):
         coord_obj.append(pygame.Rect(self.start_x, self.start_y,
                                             self.x_increase, self.y_increase))
+
+   ##def dijstra(self, graph, start, goal):
+   #    stortest_distance = {}
+   #    predecessor = {}
+   #    unseenNodes = graph
+   #    infinity = 99999999
+   #    path = []
+   #    for node in unseenNodes:
+   #        shortest_distance[node] = infinity
+   #    shortest distance[start] = 0

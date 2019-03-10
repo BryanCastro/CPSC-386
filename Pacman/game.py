@@ -3,6 +3,7 @@ import sys
 from main_menu import Main_Menu
 from sprite_sheet import Sprite_Sheet
 from character import Pacman
+from character import Ghost
 from maze import Maze
 from text import Text
 import settings
@@ -23,10 +24,11 @@ class Game:
 
         #colors
         self.colors ={"Black": (0, 0, 0),
-                 "Red": (255, 0, 0),
-                 "Green": (0, 255, 0),
-                 "Blue": (0, 0, 255),
-                 "White": (255, 255, 255)}
+                      "Red": (255, 0, 0),
+                      "Green": (0, 255, 0),
+                      "Blue": (0, 0, 255),
+                      "White": (255, 255, 255),
+                      "Yellow": (255, 255, 0)}
 
         #Settings
         self.pacman_lives_count = 3
@@ -42,6 +44,12 @@ class Game:
                                self.SCREEN_WIDTH/2, self.SCREEN_HEIGHT-self.maze.reserved_height)
         self.lives_text = Text(self.screen, "Lives: ", self.colors["White"], self.colors["Black"],
                                self.maze.half_reserved_width, self.SCREEN_HEIGHT-self.maze.reserved_height)
+        self.pacman_menu = Pacman(self.screen, self.sprite_sheet, self.maze.scale_size_x * 3,
+                                  self.maze.scale_size_y * 3, -200, self.maze.scale_size_y)
+
+        #Ghost
+        self.ghost_blinky = Ghost(self.screen, self.sprite_sheet, self.maze.scale_size_x, self.maze.scale_size_y,
+                                  self.maze.blinky_start_x, self.maze.blinky_start_y)
 
         self.pacman_lives_stored = []
         self.load_pacman_lives()
@@ -65,6 +73,10 @@ class Game:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self.pacman.movement_keydown(event, allow_movement)
+                if event.key == pygame.K_SPACE:
+                    self.main_menu = False
+                    self.pacman_game = True
+
             #elif event.type == pygame.KEYUP:
              #   self.pacman.movement_keyup(event)
 
@@ -73,12 +85,15 @@ class Game:
 
     def __game_display(self):
         self.update_movement()
+        self.ghost_blinky.check_collision(self.maze, self.pacman)
+        self.ghost_blinky.movement()
         self.score_text.recalculate_text(self.maze.points)
         self.maze.render_maze()
         self.pacman.render_character()
+        self.ghost_blinky.render_character()
         self.render_lives()
         # Here
-        self.allow_movement = self.pacman.check_collision(self.maze, self.allow_movement)
+        self.allow_movement  = self.pacman.check_collision(self.maze, self.allow_movement)
 
     def __refresh_display(self):
 
@@ -103,6 +118,8 @@ class Game:
             self.__fill_display("Black")
             if self.main_menu:
                 menu.display_menu()
+                self.pacman_menu.render_character()
+                self.pacman_menu.update_main_menu_movement()
             elif self.pacman_game:
                 self.__game_display()
 

@@ -1,10 +1,12 @@
 import pygame
 import settings
+import random
 
 class Character():
 
     def __init__(self, screen, sprite_sheet, char_dimensions, scale_size_x, scale_size_y):
         self.screen = screen
+        self.screen_area = self.screen.get_rect()
         self.sprite_sheet = sprite_sheet
         self.animation_sprites = []
         self.death_sprites = []
@@ -13,7 +15,7 @@ class Character():
         self.rect = pygame.Rect(char_dimensions)
         self.animation_index = 0
         self.death_index = 0
-        self.speed = 0
+        self.speed = 5
 
         #scale
         self.scale_size_x = scale_size_x #* 3
@@ -74,7 +76,7 @@ class Pacman(Character):
         self.move_left = False
         self.move_up = False
         self.move_down = False
-        self.speed = 5
+
 
     #def movement_keydown(self, event):
 #
@@ -105,9 +107,8 @@ class Pacman(Character):
                 self.restart_transormation(rotation_down=True)
             if event.key == pygame.K_s:
                 self.speed *= 2
-        if event.key == pygame.K_q:
-            pygame.quit()
-
+            if event.key == pygame.K_q:
+                pygame.quit()
 
     def movement_keyup(self, event):
         if event.key == pygame.K_RIGHT:
@@ -129,8 +130,14 @@ class Pacman(Character):
         elif self.move_down:
             self.rect.y += self.speed
 
+    def update_main_menu_movement(self):
+        if self.rect.x + self.rect.w * 3>= self.screen_area.w:
+            self.rect.y +=self.speed
+        else:
+            self.rect.x += self.speed
+
     def check_collision(self, maze, allow_movement):
-        testvar = self.rect.w*2
+        testvar = self.rect.w * 2
 
         for block in maze.level_blocks:
             allow_movement = False
@@ -138,6 +145,7 @@ class Pacman(Character):
                 if block.tag == "wall":
                     if self.rect.x >= block.rect.x and self.move_left:
                         self.rect.x += testvar
+                        test = self.speed
                         self.restart_movement()
                     if self.rect.x <= block.rect.x and self.move_right:
                         self.rect.x -= testvar
@@ -153,13 +161,9 @@ class Pacman(Character):
                     block.tag = "no collision"
                     maze.pellets_left -= 1
                     maze.points += 10
-                if block.tag == "intersection_up_down":
+                if block.tag == "intersection_pacman_start" or block.tag == "intersection":
                     allow_movement = True
                     return allow_movement
-
-
-
-
 
 
     def restart_movement(self, move_left = False, move_right = False, move_up = False, move_down = False):
@@ -173,3 +177,68 @@ class Pacman(Character):
         self.flipped_y = flipped_y
         self.rotation_up = rotation_up
         self.rotation_down = rotation_down
+
+class Ghost(Character):
+    def __init__(self, screen, sprite_sheet, scale_size_x, scale_size_y, start_x, start_y):
+        super(Ghost, self).__init__(screen, sprite_sheet, (start_x, start_y, 32, 32), scale_size_x, scale_size_y)
+
+        self.animation_keys = ["Orange_Ghost_Right.png"]
+        self.load_animation_sprites(self.animation_keys)
+        self.move_left = False
+        self.move_right = True
+        self.move_up = False
+        self.move_down = False
+
+    def movement(self):
+        if self.move_right == True:
+            self.rect.x += self.speed
+        elif self.move_down == True:
+            self.rect.y += self.speed
+        elif self.move_left == True:
+            self.rect.x -= self.speed
+        elif self.move_up == True:
+            self.rect.y -= self.speed
+
+    def restart_movement(self, move_left = False, move_right = False, move_up = False, move_down = False):
+        self.move_left = move_left
+        self.move_right = move_right
+        self.move_up = move_up
+        self.move_down = move_down
+
+    def check_collision(self, maze, pacman):
+
+        for node in maze.store_nodes:
+            if self.rect.colliderect(node):
+                if pacman.rect.x > self.rect.x and pacman.rect.y < self.rect.y:
+                    self.restart_movement(move_up=True)
+                elif pacman.rect.x < self.rect.x and pacman.rect.y > self.rect.y:
+                    self.restart_movement(move_down= True)
+                elif pacman.rect.x > self.rect.x:
+                    self.restart_movement(move_right = True)
+                elif pacman.rect.y > self.rect.y:
+                    self.restart_movement(move_down = True)
+                elif pacman.rect.x < self.rect.x:
+                    self.restart_movement(move_left = True)
+
+        if self.rect.x > self.screen_area.w:
+            self.restart_movement(move_left = True)
+        elif self.rect.x < 0:
+            self.restart_movement(move_right = True)
+        elif self.rect.y < 0:
+            self.restart_movement(move_down = True)
+        elif self.rect.y > self.screen_area.h:
+            self.restart_movement(move_up = True)
+
+        #for block in maze.level_blocks:
+        #    if self.rect.colliderect(block):
+        #        r =random.randint(0, 3)
+        #        if block.tag == "intersection":
+        #            if r == 0:
+        #                self.restart_movement(move_down = True)
+        #            elif r == 1:
+        #                self.restart_movement(move_up=True)
+        #            elif r == 2:
+        #                self.restart_movement(move_left=True)
+        #            elif r == 3:
+        #                self.restart_movement(move_right=True)
+
