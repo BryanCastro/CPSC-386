@@ -81,7 +81,7 @@ class Maze():
         self.start_x = self.half_reserved_width
 
         for line in self.level_lines:
-
+            scale = 2
             for char in line:
                 new_rectangle = Rectangle(self.screen, (0, 0, 0, 0))
                 new_rectangle.tag = "wall"
@@ -143,6 +143,7 @@ class Maze():
             self.start_x = self.half_reserved_width
 
     def render_maze(self):
+
 
         for block in self.level_blocks:
             self.sprite_sheet.render_sprite(self.sprite_sheet.dataDict[block.sprite_name],

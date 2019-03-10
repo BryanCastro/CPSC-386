@@ -31,6 +31,8 @@ class Character():
         #For Clock
         self.character_spawn_time = 0
 
+
+
     def render_character(self):
         self.character_spawn_time += 1
 
@@ -141,21 +143,24 @@ class Pacman(Character):
 
         for block in maze.level_blocks:
             allow_movement = False
-            if self.rect.colliderect(block):
+            if self.rect.colliderect(block.rect):
+
                 if block.tag == "wall":
-                    if self.rect.x >= block.rect.x and self.move_left:
-                        self.rect.x += testvar
-                        test = self.speed
-                        self.restart_movement()
-                    if self.rect.x <= block.rect.x and self.move_right:
-                        self.rect.x -= testvar
-                        self.restart_movement()
-                    if self.rect.y >= block.rect.y and self.move_up:
-                        self.rect.y += testvar
-                        self.restart_movement()
-                    if self.rect.y <= block.rect.y and self.move_down:
-                        self.rect.y -= testvar
-                        self.restart_movement()
+                    self.rect.x += self.speed*2
+                    #print("block: "+str(block.rect))
+                    #print("Pacman: "+str(self.rect))
+                    #if self.rect.x >= block.rect.x and self.move_left:
+                    #    self.restart_movement()
+                    #    self.rect.x += testvar
+                    #if self.rect.x <= block.rect.x and self.move_right:
+                    #    self.rect.x -= testvar
+                    #    self.restart_movement()
+                    #if self.rect.y>= block.rect.y and self.move_up:
+                    #    self.rect.y += testvar
+                    #    self.restart_movement()
+                    #if self.rect.y <= block.rect.y and self.move_down:
+                    #    self.rect.y -= testvar
+                    #    self.restart_movement()
                 if block.tag == "pellet":
                     block.sprite_name = "Blank.png"
                     block.tag = "no collision"
@@ -171,6 +176,7 @@ class Pacman(Character):
         self.move_right = move_right
         self.move_up = move_up
         self.move_down = move_down
+        self.line_start = self.rect.x
 
     def restart_transormation(self, flipped_x = False, flipped_y = False, rotation_up = False, rotation_down = False):
         self.flipped_x = flipped_x

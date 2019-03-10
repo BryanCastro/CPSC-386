@@ -14,7 +14,9 @@ def read_nodes():
         file_context = node_file.readlines()
         for line in file_context:
             for char in line:
+                new_node = Node()
                 if char == "A":
+                    new_node.tag = "A"
 
 
 
