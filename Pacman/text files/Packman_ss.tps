@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>xml</string>
         <key>textureFileName</key>
-        <filename>../images/Pacman.png</filename>
+        <filename>../../../Pacman_Portal/images/Pacman.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>Pacman.xml</filename>
+                <filename>../../../Pacman_Portal/text files/Pacman.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -236,6 +236,15 @@
             <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Death_6.png</key>
             <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Full_Open.png</key>
             <key type="filename">../images/Base_Pngs/Pacman_Pngs/Pacman_Semi_Open.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Others/Power_Pellet.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Blue_Portal_1.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Blue_Portal_2.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Blue_Portal_3.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Blue_Portal_4.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Orange_Portal_1.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Orange_Portal_2.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Orange_Portal_3.png</key>
+            <key type="filename">../../../Pacman_Portal/images/Base_Pngs/Portals/Portals/Orange_Portal_4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -255,6 +264,8 @@
             <filename>../images/Base_Pngs/Pacman_Pngs</filename>
             <filename>../images/Base_Pngs/Borders</filename>
             <filename>../images/Base_Pngs/Others</filename>
+            <filename>../../../Pacman_Portal/images/Base_Pngs/Others/Power_Pellet.png</filename>
+            <filename>../../../Pacman_Portal/images/Base_Pngs/Portals/Portals</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

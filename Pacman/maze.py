@@ -9,34 +9,28 @@ class Maze():
         self.screen_area = screen.get_rect()
         self.sprite_sheet = sprite_sheet
         self.maze_txt = maze_txt
-
         #####level things
-        self.max_chars_line = 0
-        self.max_lines = 0
         self.level_lines = self.load_maze() #function
-        self.reserved_width = 0
-        self.reserved_height = 0
-        self.half_reserved_width = 0
-        self.half_reserved_height = 0
-        self.calculate_pixel_diff() #function
 
         #####calculate scale
         self.start_x = 0
         self.start_y = 0
         self.x_increase = 0
         self.y_increase = 0
-        self.scale_size_x = 0
-        self.scale_size_y = 0
-        self.calculate_scale() #function
 
         #pacman info
         self.pacman_start_x = 0
         self.pacman_start_y = 0
 
         #Ghost info
-        self.blinky_start_x = 0
-        self.blinky_start_y = 0
-
+        self.orange_start_x = 0
+        self.orange_start_y = 0
+        self.red_start_x = 0
+        self.red_start_y = 0
+        self.blue_start_x = 0
+        self.blue_start_y = 0
+        self.pink_start_x = 0
+        self.pink_start_y = 0
         #others
         self.pellets_left = 0
         self.store_nodes = []
@@ -44,29 +38,13 @@ class Maze():
         self.level_blocks = []
         self.load_maze_2() #function
 
-
-
-    def calculate_pixel_diff(self):
-        self.reserved_width = self.screen_area.w * .074
-        self.reserved_height = self.screen_area.h * .074
-        self.half_reserved_width = self.reserved_width / 2
-        self.half_reserved_height = self.reserved_height / 2
-
-    def calculate_scale(self):
-        self.start_x = self.half_reserved_width
-        self.start_y = self.half_reserved_height
-        self.x_increase = int((self.screen_area.w - self.reserved_width) / self.max_chars_line)
-        self.y_increase = int((self.screen_area.h - self.reserved_height) / self.max_lines)
-        self.scale_size_x = self.x_increase
-        self.scale_size_y = self.y_increase
-
     def load_maze(self):
 
         with open(self.maze_txt, 'r') as level:
             level_lines = []
             for line in level.readlines():
                 self.max_chars_line = 0
-                self.max_lines += 1
+
                 new_line = []
                 for chars in line:
                     if chars != '\n':
@@ -77,16 +55,11 @@ class Maze():
         return level_lines
 
     def load_maze_2(self):
-        self.start_y = self.half_reserved_height
-        self.start_x = self.half_reserved_width
 
         for line in self.level_lines:
-
             for char in line:
                 new_rectangle = Rectangle(self.screen, (0, 0, 0, 0))
                 new_rectangle.tag = "wall"
-                self.scale_size_x = int(self.x_increase)
-                self.scale_size_y = int(self.y_increase)
 
                 if char == ".":
                     new_rectangle.sprite_name= "Blank.png"
@@ -116,10 +89,25 @@ class Maze():
                     new_rectangle.tag = "intersection_pacman_start"
                     self.pacman_start_x = self.start_x
                     self.pacman_start_y = self.start_y
+                elif char == "Y":
+                    new_rectangle.sprite_name = "Blank.png"
+                    self.orange_start_x = self.start_x
+                    self.orange_start_y = self.start_y
+                    new_rectangle.tag = "no collision"
                 elif char == "B":
                     new_rectangle.sprite_name = "Blank.png"
-                    self.blinky_start_x = self.start_x
-                    self.blinky_start_y = self.start_y
+                    self.blue_start_x = self.start_x
+                    self.blue_start_y = self.start_y
+                    new_rectangle.tag = "no collision"
+                elif char == "P":
+                    new_rectangle.sprite_name = "Blank.png"
+                    self.pink_start_x = self.start_x
+                    self.pink_start_y = self.start_y
+                    new_rectangle.tag = "no collision"
+                elif char == "R":
+                    new_rectangle.sprite_name = "Blank.png"
+                    self.red_start_x = self.start_x
+                    self.red_start_y = self.start_y
                     new_rectangle.tag = "no collision"
                 elif char == "O":
                     new_rectangle.sprite_name = "Pellet.png"
@@ -129,36 +117,29 @@ class Maze():
                     new_rectangle.sprite_name = "Blank.png"
                     new_rectangle.tag = "intersection"
                     self.store_nodes.append(new_rectangle)
+                elif char == "T":
+                    new_rectangle.sprite_name = "Power_Pellet.png"
+                    new_rectangle.tag = "Power_Pellet"
+                    self.store_nodes.append(new_rectangle)
                 else:
                     new_rectangle.sprite_name = "Blank.png"
                     new_rectangle.tag = "no collision"
 
-                new_rectangle.rect = pygame.Rect(int(self.start_x), int(self.start_y), self.scale_size_x, self.scale_size_y)
-
+                new_rectangle.rect = pygame.Rect(int(self.start_x), int(self.start_y), 10, 10)
 
                 self.level_blocks.append(new_rectangle)
-                self.start_x = self.start_x + self.x_increase
+                self.start_x += 10
 
-            self.start_y += self.y_increase
-            self.start_x = self.half_reserved_width
+            self.start_y += 10
+            self.start_x = 0
 
     def render_maze(self):
 
         for block in self.level_blocks:
             self.sprite_sheet.render_sprite(self.sprite_sheet.dataDict[block.sprite_name],
-                                            (block.rect.x, block.rect.y), True,
-                                            block.rect.w, block.rect.h)
+                                            (block.rect.x, block.rect.y),
+                                            width = block.rect.w, height = block.rect.h)
 
     def save_coords(self, coord_obj):
         coord_obj.append(pygame.Rect(self.start_x, self.start_y,
                                             self.x_increase, self.y_increase))
-
-   ##def dijstra(self, graph, start, goal):
-   #    stortest_distance = {}
-   #    predecessor = {}
-   #    unseenNodes = graph
-   #    infinity = 99999999
-   #    path = []
-   #    for node in unseenNodes:
-   #        shortest_distance[node] = infinity
-   #    shortest distance[start] = 0

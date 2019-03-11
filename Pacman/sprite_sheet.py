@@ -96,12 +96,12 @@ class Sprite_Sheet:
 
 ########END-Used to clean up xml file-END###########
 
-    def render_sprite(self, sprite_crop, sprite_position, transform_sprite=False, scale_size_x = 0, scale_size_y = 0,
-                      flipped_x = False, flipped_y = False, rotation_up = False, rotation_down = False):
-        if transform_sprite:
-            subsurface_test = self.sheet.subsurface(sprite_crop)
-            scaled_sprite = pygame.transform.scale(subsurface_test, (scale_size_x, scale_size_y))
+    def render_sprite(self, sprite_crop, sprite_position,
+                      flipped_x = False, flipped_y = False, rotation_up = False, rotation_down = False,
+                      width = 0, height = 0):
 
+            subsurface_transform = self.sheet.subsurface(sprite_crop)
+            scaled_sprite = pygame.transform.scale(subsurface_transform, (width, height))
 
             if flipped_x:
                 flipped = pygame.transform.flip(scaled_sprite, True, False)
@@ -117,6 +117,3 @@ class Sprite_Sheet:
                 self.screen.blit(rotation, sprite_position)
             else:
                 self.screen.blit(scaled_sprite, sprite_position)
-        else:
-            self.screen.blit(self.sheet, sprite_position, sprite_crop)
-#

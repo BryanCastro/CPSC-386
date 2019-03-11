@@ -15,10 +15,6 @@ class Text:
         self.textrect.y = rect_position_y
         self.font_color = font_color
         self.background_color = background_color
-        ##elf.textrect = self.text.get_rect()
-        #elf.textrect.centerx = screen.get_rect().centerx
-        #elf.textrect.centery = screen.get_rect().centery
-
 
     def display_text(self):
         self.screen.blit(self.text_rendered, self.textrect)

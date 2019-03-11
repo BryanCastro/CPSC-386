@@ -21,6 +21,8 @@ class Main_Menu:
         self.title_label_x = self.center_text_x(self.title_label)
         self.title_label_2 = self.myfont.render("Portal", 1, (255, 255, 0))
         self.title_label_2_x = self.center_text_x(self.title_label_2)
+        #self.press_space_label = self.myfont.render("Press Space to play", 1, (255, 255, 0))
+        #self.press_space_label_x = self.center_text_x(self.press_space_label)
 
 
     def display_menu(self):
@@ -29,6 +31,7 @@ class Main_Menu:
 
         self.screen.blit(self.title_label, (self.title_label_x, 100))
         self.screen.blit(self.title_label_2, (self.title_label_2_x, 150))
+       # self.screen.blit(self.press_space_label, (self.press_space_label_x, 200))
 
     def center_text_x(self, text_label):
         rect = text_label.get_rect()
